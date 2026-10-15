@@ -6,7 +6,7 @@ import styles from './Preloader.module.css';
  * Écran d'ouverture : le logo RIFF se trace sur fond noir pendant 5 s, puis le rideau se lève.
  * - une seule fois par session (sessionStorage) ;
  * - passé immédiatement avec prefers-reduced-motion ;
- * - ignorable : bouton « Passer », clic, Entrée ou Échap ;
+ * - ignorable sans bouton visible : clic, Entrée ou Échap ;
  * - le site est déjà rendu dessous (contenu et SEO intacts) ; ses animations d'entrée démarrent à la levée du rideau.
  * Le drapeau `preloading` est posé sur <html> par un script inline (index.html) avant le premier rendu : pas de flash.
  */
@@ -55,10 +55,6 @@ export function Preloader() {
       <div className={styles.mark}>
         <Logo size="lg" />
       </div>
-      <span className={styles.bar} aria-hidden="true"><i /></span>
-      <button type="button" className={`mono ${styles.skipBtn}`} onClick={(e) => { e.stopPropagation(); skip(); }}>
-        Passer
-      </button>
     </div>
   );
 }
