@@ -142,9 +142,59 @@ function makeSprite(rgb: string) {
 }
 
 // Emprise réelle de la figure dans le repère 400×400 (centre et dimensions)
+// Emprise réelle de la figure dans le repère 400×400 (centre et dimensions)
 const FX = 207, FY = 215, FW = 324, FH = 345;
 const ASSEMBLE = 1700;
 const SPIN = 1.7; // rad/s
+
+// Tranches verticales (façon statue découpée) : deux coupes, trois tranches décalées en hauteur
+const CUTS = [150, 262];
+const SLIT = 5;                         // demi-largeur des fentes sombres (repère 400)
+const SLICE_DY = [10, -16, 24];         // décalage vertical de chaque tranche (repère 400)
+const INK = '#111315';
+const PAPER = '#ecebe4';
+const GREEN = '#10f25a';
+
+interface Brush { path: Path2D; streaks: { x: number; y: number; w: number; h: number }[]; x1: number }
+
+/** Coup de pinceau vert aux bords irréguliers, avec traînées sèches. Géométrie déterministe. */
+function buildBrush(x0: number, x1: number, y0: number, y1: number): Brush {
+  const r = rng(5);
+  const path = new Path2D();
+  const bh = y1 - y0;
+  const wob = (x: number, ph: number) => Math.sin(x * 0.011 + ph) * 0.35 + Math.sin(x * 0.037 + ph * 2) * 0.2 + Math.sin(x * 0.09 + ph * 3) * 0.1;
+  const p1 = r() * 6, p2 = r() * 6;
+  const step = 7;
+  const top: [number, number][] = [], bot: [number, number][] = [];
+  for (let x = x0; x <= x1; x += step) {
+    top.push([x, y0 + wob(x, p1) * bh * 0.16 + (r() - 0.5) * 3]);
+    bot.push([x, y1 + wob(x, p2) * bh * 0.16 + (r() - 0.5) * 3]);
+  }
+  // bords gauche (dentelé) et droit (effiloché)
+  path.moveTo(top[0][0], top[0][1]);
+  for (const [x, y] of top) path.lineTo(x, y);
+  const rightEdge = bot[bot.length - 1][0];
+  const bristles = 16;
+  for (let k = 0; k < bristles; k++) {
+    const yy = top[top.length - 1][1] + ((bot[bot.length - 1][1] - top[top.length - 1][1]) * k) / bristles;
+    const len = 6 + r() * 70 * (0.3 + Math.abs(Math.sin(k * 1.7)));
+    path.lineTo(rightEdge - 18 + r() * 10, yy);
+    path.lineTo(rightEdge + len, yy + (bh / bristles) * 0.35);
+    path.lineTo(rightEdge - 12, yy + (bh / bristles) * 0.7);
+  }
+  for (let i = bot.length - 1; i >= 0; i--) path.lineTo(bot[i][0], bot[i][1]);
+  for (let k = 0; k < 12; k++) {
+    const yy = bot[0][1] - ((bot[0][1] - top[0][1]) * k) / 12;
+    path.lineTo(x0 + r() * 22 - (k % 2 ? 0 : 14), yy);
+  }
+  path.closePath();
+  const streaks: Brush['streaks'] = [];
+  for (let i = 0; i < 34; i++) {
+    const sw = 30 + r() * 220;
+    streaks.push({ x: x0 + r() * (x1 - x0 - sw * 0.5), y: y0 + 4 + r() * (bh - 8), w: sw, h: 1 + r() * 1.8 });
+  }
+  return { path, streaks, x1: rightEdge + 90 };
+}
 
 export function DroneGramophone() {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -158,6 +208,8 @@ export function DroneGramophone() {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     let w = 0, h = 0, dpr = 1, scale = 1, ox = 0, oy = 0;
+    let brush: Brush | null = null;
+    let slitTop = 0, slitBot = 0;
     let raf = 0, visible = true, running = false;
     let mx = -9999, my = -9999;
     const t0 = performance.now();
@@ -168,39 +220,82 @@ export function DroneGramophone() {
       w = rect.width; h = rect.height;
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
-      // Le gramophone remplit le fond du hero : grand et décalé à droite sur desktop, centré derrière le texte sur mobile
       const mobile = w < 760;
       const tablet = !mobile && w < 1100;
-      // La figure est toujours entièrement visible : bornée par la hauteur de l'écran et par la zone à droite du texte
       const vh = Math.min(h, window.innerHeight);
-      const m = Math.max(24, w * 0.03);
-      let cx: number, cy: number;
+      let cx: number, cy: number, bx0: number, bx1: number, by0: number, by1: number;
       if (mobile) {
         // Mobile : la figure s'installe dans l'espace laissé entre le titre (haut) et les boutons (bas)
-        const gapTop = 235, gapBottom = 345;
+        const gapTop = 215, gapBottom = 345;
         const gap = Math.max(240, h - gapTop - gapBottom);
-        scale = Math.min((w * 0.9) / FW, (gap * 0.96) / FH);
+        scale = Math.min((w * 0.88) / FW, (gap * 0.84) / FH);
         cx = w / 2;
-        cy = gapTop + gap / 2;
+        cy = gapTop + gap / 2 - 8;
+        bx0 = -20; bx1 = w * 0.86; by0 = cy + FH * scale * 0.02; by1 = cy + FH * scale * 0.3;
+      } else if (tablet) {
+        scale = Math.min((vh * 0.54) / FH, (w * 0.58) / FW);
+        cx = w * 0.46;
+        cy = vh * 0.5;
+        bx0 = w * 0.02; bx1 = w * 0.78; by0 = cy + FH * scale * 0.03; by1 = cy + FH * scale * 0.3;
       } else {
-        const zone = w * (tablet ? 0.62 : 0.46); // largeur de la zone réservée au gramophone (à droite)
-        scale = Math.min((vh * (tablet ? 0.62 : 0.8)) / FH, (zone - m) / FW);
-        cx = w - m - (FW * scale) / 2;
-        cy = vh * (tablet ? 0.54 : 0.56);
+        // Desktop : figure à gauche du centre, coup de pinceau derrière, menu et logo à droite
+        scale = Math.min((vh * 0.74) / FH, (w * 0.44) / FW);
+        cx = w * 0.43;
+        cy = vh * 0.55;
+        bx0 = w * 0.04; bx1 = w * 0.56; by0 = cy + FH * scale * 0.1; by1 = cy + FH * scale * 0.3;
       }
       ox = cx - FX * scale;
       oy = cy - FY * scale;
+      brush = buildBrush(bx0, bx1, by0, by1);
+      slitTop = oy + (FY - FH / 2 - 6) * scale;
+      slitBot = oy + (FY + FH / 2 + 4) * scale;
     };
 
     const draw = (now: number) => {
+      const frozen = reduce;
       const el = reduce ? 1e6 : now - t0;
       const sec = el / 1000;
-      const spinRamp = Math.min(1, el / ASSEMBLE); // le disque accélère pendant le décollage
+      const spinRamp = Math.min(1, el / ASSEMBLE);
       const spin = reduce ? 0.5 : sec * SPIN * spinRamp;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, w, h);
-      ctx.globalCompositeOperation = 'lighter';
-      // Quand on fait défiler la page, la flotte se disperse comme des drones qui quittent la scène
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.globalAlpha = 1;
+
+      // — Coup de pinceau : se dessine de gauche à droite
+      const prog = reduce ? 1 : Math.min(1, Math.max(0, (el - 350) / 1300));
+      const pe = 1 - Math.pow(1 - prog, 3);
+      const front = (brush ? brush.x1 : w) * pe;
+      if (brush && prog > 0) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(0, 0, front, h);
+        ctx.clip();
+        ctx.fillStyle = GREEN;
+        ctx.fill(brush.path);
+        ctx.fillStyle = INK;
+        ctx.globalAlpha = 0.55;
+        for (const s of brush.streaks) ctx.fillRect(s.x, s.y, s.w, s.h);
+        ctx.restore();
+      }
+
+      // — Fentes sombres entre les tranches
+      for (const cx0 of CUTS) {
+        const sx = ox + (cx0 - SLIT) * scale;
+        const sw = SLIT * 2 * scale;
+        const g = ctx.createLinearGradient(sx, 0, sx + sw, 0);
+        g.addColorStop(0, '#3a3e41');
+        g.addColorStop(1, '#0c0d0e');
+        ctx.fillStyle = g;
+        const yTop = slitTop + (cx0 === CUTS[0] ? 8 : -12) * scale;
+        const yBot = slitBot + (cx0 === CUTS[0] ? -10 : 8) * scale;
+        const rad = sw / 2;
+        ctx.beginPath();
+        ctx.roundRect(sx, yTop, sw, yBot - yTop, rad);
+        ctx.fill();
+      }
+
+      // — Points
       const away = reduce ? 0 : Math.min(1, Math.max(0, window.scrollY / (h * 0.75)));
       const R = 120;
 
@@ -211,7 +306,7 @@ export function DroneGramophone() {
           tx = REC.cx + d.rr * REC.rx * Math.cos(ang);
           ty = REC.cy + d.rr * REC.ry * Math.sin(ang);
         } else if (d.kind === 'arm') {
-          tx = d.x; ty = d.y + (reduce ? 0 : Math.sin(sec * 1.3) * 0.9);
+          tx = d.x; ty = d.y + (frozen ? 0 : Math.sin(sec * 1.3) * 0.9);
         } else {
           tx = d.x; ty = d.y;
         }
@@ -220,18 +315,23 @@ export function DroneGramophone() {
         const e = 1 - Math.pow(1 - k, 3);
         let x = d.sx + (tx - d.sx) * e;
         let y = d.sy + (ty - d.sy) * e;
-        if (!reduce) {
+        if (!frozen) {
           x += Math.sin(sec * 0.9 + d.phase) * 0.9 * e;
           y += Math.cos(sec * 0.8 + d.phase * 1.3) * 0.9 * e;
         }
+        // tranche d'appartenance : décalage vertical propre, et on évite les fentes
+        const si = x < CUTS[0] ? 0 : x < CUTS[1] ? 1 : 2;
+        if (Math.abs(x - CUTS[0]) < SLIT || Math.abs(x - CUTS[1]) < SLIT) continue;
+        const breathe = frozen ? 0 : Math.sin(sec * 0.6 + si * 2.1) * 3;
+        y += (SLICE_DY[si] + breathe) * e;
+
         x += d.rx * away * 150;
         y += d.ry * away * 150 - away * 40;
-        const twinkle = reduce ? 1 : 0.82 + 0.18 * Math.sin(sec * 2.2 + d.phase * 3);
-        ctx.globalAlpha = Math.min(1, e * 1.2) * twinkle * (1 - away * 0.9);
-        const r = Math.max(1.2, d.size * Math.min(scale, 1.9) * 0.8);
+        const twinkle = frozen ? 1 : 0.82 + 0.18 * Math.sin(sec * 2.2 + d.phase * 3);
+        const a = Math.min(1, e * 1.2) * twinkle * (1 - away * 0.9);
+        const r = Math.max(1.3, d.size * Math.min(scale, 1.9) * 0.85);
         let px = ox + x * scale;
         let py = oy + y * scale;
-        // Le curseur repousse les points proches, comme une perturbation dans la flotte
         const ddx = px - mx, ddy = py - my;
         const dd = Math.hypot(ddx, ddy);
         if (dd < R && dd > 0.01) {
@@ -239,18 +339,25 @@ export function DroneGramophone() {
           px += (ddx / dd) * push;
           py += (ddy / dd) * push;
         }
-        const a = ctx.globalAlpha;
-        // Halo très léger, puis un cœur net : points nets, pas de flou
-        ctx.globalAlpha = a * 0.28;
-        ctx.drawImage(d.green ? green : white, px - r * 3, py - r * 3, r * 6, r * 6);
+
+        // Sur le coup de pinceau vert, les points passent à l'encre pour rester lisibles
+        const onBrush = brush !== null && px < front && ctx.isPointInPath(brush.path, px * dpr, py * dpr);
         ctx.globalAlpha = a;
-        ctx.fillStyle = d.green ? '#10f25a' : '#ecebe4';
+        if (onBrush) {
+          ctx.fillStyle = INK;
+        } else {
+          ctx.globalCompositeOperation = 'lighter';
+          ctx.globalAlpha = a * 0.28;
+          ctx.drawImage(d.green ? green : white, px - r * 3, py - r * 3, r * 6, r * 6);
+          ctx.globalCompositeOperation = 'source-over';
+          ctx.globalAlpha = a;
+          ctx.fillStyle = d.green ? GREEN : PAPER;
+        }
         ctx.beginPath();
         ctx.arc(px, py, r, 0, Math.PI * 2);
         ctx.fill();
       }
       ctx.globalAlpha = 1;
-      ctx.globalCompositeOperation = 'source-over';
     };
 
     const loop = (now: number) => {
@@ -307,7 +414,7 @@ export function DroneGramophone() {
       ref={ref}
       className={styles.canvas}
       role="img"
-      aria-label="Gramophone dessiné par des points lumineux, comme un spectacle de drones, dont le disque tourne"
+      aria-label="Gramophone dessiné par des points lumineux, découpé en tranches verticales sur un coup de pinceau vert, dont le disque tourne"
     />
   );
 }

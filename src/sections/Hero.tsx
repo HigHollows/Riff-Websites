@@ -1,6 +1,8 @@
 import { Button } from '../components/Button';
 import { DroneGramophone } from '../components/DroneGramophone';
+import { Logo } from '../components/Logo';
 import { useContactIntent } from '../hooks/useContactIntent';
+import { navItems } from '../config/navigation';
 import { site } from '../config/site';
 import styles from './Hero.module.css';
 
@@ -12,11 +14,38 @@ export function Hero() {
         <DroneGramophone />
       </div>
 
-      <div className={`wrap ${styles.grid}`}>
-        <p className={`mono ${styles.kicker}`}>
-          <span className={styles.dot} aria-hidden="true" />
-          Booking · Management · Accompagnement — {site.region}
+      <div className={styles.stage}>
+        <a href="#artistes" className={styles.play} aria-label="Découvrir les artistes">
+          <svg viewBox="0 0 100 110" aria-hidden="true" focusable="false">
+            <path d="M6 6 L94 55 L6 104 Z" fill="currentColor" stroke="currentColor" strokeWidth="10" strokeLinejoin="round" />
+          </svg>
+        </a>
+
+        <div className={styles.logoBig} aria-hidden="true">
+          <Logo />
+        </div>
+
+        <p className={`mono ${styles.side}`}>
+          {site.socials.length > 0
+            ? site.socials.map((s) => (
+                <a key={s.href} href={s.href} target="_blank" rel="noopener noreferrer">{s.label}</a>
+              ))
+            : <>
+                <span>Booking</span>
+                <span>Management</span>
+                <span>{site.region}</span>
+              </>}
         </p>
+
+        <nav className={styles.bigNav} aria-label="Accès rapides">
+          <ul>
+            {navItems.map((n, i) => (
+              <li key={n.id} style={{ ['--i' as string]: i }}>
+                <a href={n.href}>{n.label.toLowerCase()}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
         <h1 id="hero-title" className={`display ${styles.title}`}>
           <span className={styles.line}><span>Faire émerger</span></span>
@@ -43,7 +72,6 @@ export function Hero() {
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );
