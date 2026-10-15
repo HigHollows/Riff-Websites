@@ -10,7 +10,6 @@ import styles from './DroneGramophone.module.css';
  * - prefers-reduced-motion : une image fixe, sans décollage ni rotation.
  */
 
-const VW = 400;
 const VH = 400;
 
 type Kind = 'fixed' | 'record' | 'arm';
@@ -23,6 +22,7 @@ interface Dot {
   phase: number;
   delay: number;
   sx: number; sy: number;    // position de départ (au sol)
+  rx: number; ry: number;    // direction de dispersion quand on quitte le hero
 }
 
 // Générateur pseudo-aléatoire déterministe : même figure à chaque rendu
@@ -49,18 +49,19 @@ function build(): Dot[] {
       phase: r() * Math.PI * 2,
       delay: r() * 900,
       sx: x + (r() - 0.5) * 70, sy: VH + 20 + r() * 30,
+      rx: r() * 2 - 1, ry: r() * 2 - 1,
       ...p,
     });
   };
   const fixed = (x: number, y: number, size = 1.7, green = false) => add({ kind: 'fixed', x, y, size, green });
 
   const line = (x1: number, y1: number, x2: number, y2: number, step: number, size = 1.6, green = false) => {
-    const n = Math.max(1, Math.round(Math.hypot(x2 - x1, y2 - y1) / step));
+    const n = Math.max(1, Math.round(Math.hypot(x2 - x1, y2 - y1) / (step * 0.8)));
     for (let i = 0; i <= n; i++) fixed(x1 + ((x2 - x1) * i) / n, y1 + ((y2 - y1) * i) / n, size, green);
   };
   const arc = (cx: number, cy: number, rx: number, ry: number, from: number, to: number, step: number, size = 1.6) => {
     const len = Math.abs(to - from) * ((rx + ry) / 2);
-    const n = Math.max(3, Math.round(len / step));
+    const n = Math.max(3, Math.round(len / (step * 0.8)));
     for (let i = 0; i <= n; i++) {
       const a = from + ((to - from) * i) / n;
       fixed(cx + rx * Math.cos(a), cy + ry * Math.sin(a), size);
@@ -140,6 +141,8 @@ function makeSprite(rgb: string) {
   return s;
 }
 
+// Emprise réelle de la figure dans le repère 400×400 (centre et dimensions)
+const FX = 195, FY = 218, FW = 310, FH = 340;
 const ASSEMBLE = 1700;
 const SPIN = 1.7; // rad/s
 
@@ -156,6 +159,7 @@ export function DroneGramophone() {
 
     let w = 0, h = 0, dpr = 1, scale = 1, ox = 0, oy = 0;
     let raf = 0, visible = true, running = false;
+    let mx = -9999, my = -9999;
     const t0 = performance.now();
 
     const resize = () => {
@@ -164,9 +168,19 @@ export function DroneGramophone() {
       w = rect.width; h = rect.height;
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
-      scale = Math.min(w / VW, h / VH);
-      ox = (w - VW * scale) / 2;
-      oy = (h - VH * scale) / 2;
+      // Le gramophone remplit le fond du hero : grand et décalé à droite sur desktop, centré derrière le texte sur mobile
+      const mobile = w < 760;
+      const tablet = !mobile && w < 1100;
+      // Mobile : la figure s'installe dans l'espace laissé entre le titre (haut) et les boutons (bas)
+      const gapTop = 235, gapBottom = 345;
+      const gap = Math.max(240, h - gapTop - gapBottom);
+      scale = mobile
+        ? Math.min((w * 0.9) / FW, (gap * 0.98) / FH)
+        : Math.min((h * 0.96) / FH, (w * (tablet ? 0.6 : 0.46)) / FW);
+      const cx = w * (mobile ? 0.5 : tablet ? 0.64 : 0.68);
+      const cy = mobile ? gapTop + gap / 2 : h * 0.54;
+      ox = cx - FX * scale;
+      oy = cy - FY * scale;
     };
 
     const draw = (now: number) => {
@@ -177,6 +191,9 @@ export function DroneGramophone() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, w, h);
       ctx.globalCompositeOperation = 'lighter';
+      // Quand on fait défiler la page, la flotte se disperse comme des drones qui quittent la scène
+      const away = reduce ? 0 : Math.min(1, Math.max(0, window.scrollY / (h * 0.75)));
+      const R = 120;
 
       for (const d of dots) {
         let tx: number, ty: number;
@@ -198,11 +215,21 @@ export function DroneGramophone() {
           x += Math.sin(sec * 0.9 + d.phase) * 0.9 * e;
           y += Math.cos(sec * 0.8 + d.phase * 1.3) * 0.9 * e;
         }
+        x += d.rx * away * 150;
+        y += d.ry * away * 150 - away * 40;
         const twinkle = reduce ? 1 : 0.82 + 0.18 * Math.sin(sec * 2.2 + d.phase * 3);
-        ctx.globalAlpha = Math.min(1, e * 1.2) * twinkle;
-        const s = d.size * scale * 3.4;
-        const px = ox + x * scale;
-        const py = oy + y * scale;
+        ctx.globalAlpha = Math.min(1, e * 1.2) * twinkle * (1 - away * 0.9);
+        const s = d.size * Math.min(scale, 1.9) * 3.4;
+        let px = ox + x * scale;
+        let py = oy + y * scale;
+        // Le curseur repousse les points proches, comme une perturbation dans la flotte
+        const ddx = px - mx, ddy = py - my;
+        const dd = Math.hypot(ddx, ddy);
+        if (dd < R && dd > 0.01) {
+          const push = Math.pow(1 - dd / R, 2) * 34;
+          px += (ddx / dd) * push;
+          py += (ddy / dd) * push;
+        }
         ctx.drawImage(d.green ? green : white, px - s, py - s, s * 2, s * 2);
       }
       ctx.globalAlpha = 1;
@@ -234,10 +261,23 @@ export function DroneGramophone() {
       if (visible) start(); else stop();
     });
     io.observe(canvas);
+    const onMove = (e: PointerEvent) => {
+      if (e.pointerType !== 'mouse') return;
+      const rect = canvas.getBoundingClientRect();
+      mx = e.clientX - rect.left;
+      my = e.clientY - rect.top;
+    };
+    const onLeave = () => { mx = my = -9999; };
+    if (!reduce) {
+      window.addEventListener('pointermove', onMove, { passive: true });
+      document.addEventListener('pointerleave', onLeave);
+    }
     const onVis = () => (document.hidden ? stop() : start());
     document.addEventListener('visibilitychange', onVis);
 
     return () => {
+      window.removeEventListener('pointermove', onMove);
+      document.removeEventListener('pointerleave', onLeave);
       stop();
       ro.disconnect();
       io.disconnect();

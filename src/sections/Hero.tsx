@@ -1,7 +1,5 @@
-import { Photo } from '../components/Photo';
-import { DroneGramophone } from '../components/DroneGramophone';
-import { photos } from '../data/photos';
 import { Button } from '../components/Button';
+import { DroneGramophone } from '../components/DroneGramophone';
 import { useContactIntent } from '../hooks/useContactIntent';
 import { site } from '../config/site';
 import styles from './Hero.module.css';
@@ -10,29 +8,21 @@ export function Hero() {
   const { open } = useContactIntent();
   return (
     <section id="top" className={styles.hero} aria-labelledby="hero-title">
+      <div className={styles.bg}>
+        <DroneGramophone />
+      </div>
+
       <div className={`wrap ${styles.grid}`}>
         <p className={`mono ${styles.kicker}`}>
           <span className={styles.dot} aria-hidden="true" />
           Booking · Management · Accompagnement — {site.region}
         </p>
 
-        <div className={styles.gram}>
-          <DroneGramophone />
-        </div>
-
-        <figure className={styles.visual}>
-          <Photo photo={photos.hero} priority />
-          <div className={styles.rail} aria-hidden="true">
-            {Array.from({ length: 9 }, (_, i) => <i key={i} style={{ ['--i' as string]: i }} />)}
-          </div>
-          <figcaption className={`mono ${styles.caption}`}>Live — la scène vue de l’intérieur</figcaption>
-        </figure>
-
         <h1 id="hero-title" className={`display ${styles.title}`}>
-          <span className={`${styles.line}`}><span>Faire émerger</span></span>
-          <span className={`${styles.line}`}><span>les groupes<b>.</b></span></span>
-          <span className={`${styles.line} ${styles.outline}`}><span>Faire vibrer</span></span>
-          <span className={`${styles.line} ${styles.outline}`}><span>les scènes<b>.</b></span></span>
+          <span className={styles.line}><span>Faire émerger</span></span>
+          <span className={styles.line}><span>les groupes<b>.</b></span></span>
+          <span className={`${styles.line} ${styles.green}`}><span>Faire vibrer</span></span>
+          <span className={`${styles.line} ${styles.green}`}><span>les scènes<b>.</b></span></span>
         </h1>
 
         <div className={styles.foot}>
@@ -53,6 +43,11 @@ export function Hero() {
             </div>
           </div>
         </div>
+
+        <a href="#artistes" className={`mono ${styles.hint}`}>
+          <span>Défiler</span>
+          <i aria-hidden="true" />
+        </a>
       </div>
     </section>
   );

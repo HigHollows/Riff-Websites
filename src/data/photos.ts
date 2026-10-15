@@ -5,11 +5,6 @@
 export interface Photo { src: string; alt: string; width: number; height: number; position: string; credit?: string }
 
 export const photos = {
-  hero: {
-    src: '/photos/live-festival-nuit.webp',
-    alt: 'Vue depuis le côté d’une scène en plein air, de nuit : un chanteur face à un public aux bras levés, sous les projecteurs.',
-    width: 900, height: 1600, position: '62% 62%',
-  },
   sunset: {
     src: '/photos/live-place-coucher-soleil.webp',
     alt: 'Un groupe pose sur scène devant un public place publique au coucher du soleil, les mains levées en signe rock.',
