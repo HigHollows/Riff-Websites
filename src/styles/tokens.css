@@ -1,0 +1,55 @@
+/* RIFF — design tokens. Toute valeur visuelle du site passe par ici. */
+:root {
+  /* Couleurs */
+  --c-ink: #0b0c0b;          /* noir charbon, surface principale */
+  --c-ink-2: #121412;        /* surface secondaire */
+  --c-ink-3: #1b1d1b;        /* surface relevée */
+  --c-line: #2b2e2b;         /* séparations */
+  --c-mute: #8c908a;         /* métadonnées (contraste 5.9:1 sur --c-ink) */
+  --c-paper: #ecebe4;        /* blanc cassé */
+  --c-paper-2: #d9d8cf;
+  --c-green: #2bff73;        /* vert signature — usage stratégique uniquement */
+  --c-green-ink: #062611;    /* texte sur vert */
+
+  /* Typographie */
+  --f-display: 'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif;
+  --f-body: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono: 'DM Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --fs-hero: clamp(4rem, 13.2vw, 13.5rem);
+  --fs-xxl: clamp(3.2rem, 9vw, 9rem);
+  --fs-xl: clamp(2.6rem, 6vw, 6rem);
+  --fs-lg: clamp(1.9rem, 3.4vw, 3.2rem);
+  --fs-md: clamp(1.15rem, 1.5vw, 1.4rem);
+  --fs-base: 1.0625rem;
+  --fs-sm: 0.9rem;
+  --fs-mono: 0.75rem;
+
+  /* Espacements */
+  --gutter: clamp(1.1rem, 3vw, 2.5rem);
+  --s-1: 0.5rem;
+  --s-2: 1rem;
+  --s-3: 1.5rem;
+  --s-4: 2.5rem;
+  --s-5: 4rem;
+  --s-6: clamp(5rem, 11vw, 10rem);
+  --maxw: 1680px;
+  --nav-h: 64px;
+
+  /* Rayons : angles vifs par défaut */
+  --r-0: 0;
+  --r-1: 2px;
+
+  /* Mouvement : une seule grammaire */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);   /* sortie franche, arrêt net */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --t-fast: 180ms;     /* états interactifs */
+  --t-base: 520ms;     /* révélations */
+  --t-slow: 1000ms;    /* entrées majeures */
+  --stagger: 70ms;
+
+  /* Couches */
+  --z-nav: 50;
+  --z-menu: 60;
+  --z-skip: 100;
+}

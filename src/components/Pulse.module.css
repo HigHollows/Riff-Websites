@@ -1,0 +1,10 @@
+.pulse { display: flex; align-items: flex-end; gap: 6px; width: 100%; overflow: hidden; }
+.pulse span { flex: 1 1 0; min-width: 2px; max-width: 3px; background: var(--c-line); transform-origin: bottom; }
+.hot { background: var(--c-green) !important; }
+.light span { background: rgba(11, 12, 11, 0.28); }
+.light .hot { background: var(--c-ink) !important; }
+
+@media (prefers-reduced-motion: no-preference) {
+  :global(html.js) .pulse span { transform: scaleY(0); transition: transform var(--t-base) var(--ease); transition-delay: calc(var(--i) * 14ms); }
+  :global(html.js) .pulse:global(.is-in) span { transform: scaleY(1); }
+}

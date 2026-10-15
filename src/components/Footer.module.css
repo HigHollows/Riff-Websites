@@ -1,0 +1,13 @@
+.footer { padding-block: var(--s-5) var(--s-3); border-top: 1px solid var(--c-line); }
+.top { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--s-2); row-gap: var(--s-5); padding-block: var(--s-5); }
+.brand { grid-column: 1 / 7; display: grid; gap: var(--s-3); align-content: start; }
+.brand p { max-width: 26rem; color: var(--c-paper-2); }
+.cols { grid-column: 8 / -1; display: flex; gap: var(--s-5); flex-wrap: wrap; }
+.cols ul { display: grid; gap: 0.6rem; align-content: start; min-width: 9rem; color: var(--c-paper-2); }
+.cols :global(.mono) { color: var(--c-mute); margin-bottom: 0.4rem; }
+.cols a { position: relative; display: inline-block; padding-block: 0.15rem; transition: color var(--t-fast); }
+.cols a:hover { color: var(--c-green); }
+.legal { display: flex; flex-wrap: wrap; gap: var(--s-3); color: var(--c-mute); padding-top: var(--s-3); border-top: 1px solid var(--c-line); }
+.legal a:hover { color: var(--c-paper); }
+.up { margin-left: auto; }
+@media (max-width: 860px) { .brand, .cols { grid-column: 1 / -1; } }

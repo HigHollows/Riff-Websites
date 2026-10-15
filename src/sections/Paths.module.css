@@ -1,0 +1,32 @@
+.section { position: relative; }
+.stage { display: grid; grid-template-columns: minmax(0, 7fr) 3.5rem minmax(0, 5fr); min-height: min(90vh, 52rem); }
+
+.artist { background: var(--c-paper); color: var(--c-ink); }
+.pro { background: var(--c-ink); border-block: 1px solid var(--c-line); display: flex; align-items: flex-end; }
+.inner { height: 100%; display: flex; flex-direction: column; justify-content: space-between; gap: var(--s-4); padding: var(--s-5) var(--gutter); }
+.artist .inner { padding-left: max(var(--gutter), calc((100vw - var(--maxw)) / 2 + var(--gutter))); }
+.pro .inner { padding-right: max(var(--gutter), calc((100vw - var(--maxw)) / 2 + var(--gutter))); justify-content: flex-start; gap: var(--s-4); }
+.artist :global(.mono) { color: rgba(11, 12, 11, 0.62); }
+.pro :global(.mono) { color: var(--c-green); }
+
+.bigA { font-size: clamp(3.4rem, 8.4vw, 8.6rem); line-height: 0.86; }
+.bigA span { color: var(--c-ink); }
+.bigB { font-size: clamp(2.8rem, 5.6vw, 5.8rem); line-height: 0.88; }
+.bigB span { color: var(--c-green); }
+.text { max-width: 30rem; font-size: var(--fs-md); line-height: 1.5; }
+.artist .text { color: rgba(11, 12, 11, 0.82); }
+.pro .text { color: var(--c-paper-2); }
+
+/* Axe de liaison */
+.axis { position: relative; background: var(--c-green); color: var(--c-green-ink); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.axisWord { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 2.4rem; letter-spacing: 0.12em; }
+
+@media (max-width: 900px) {
+  .stage { grid-template-columns: 1fr; min-height: 0; }
+  .axis { height: 3rem; }
+  .axisWord { writing-mode: horizontal-tb; transform: none; font-size: 1.6rem; }
+  .artist .inner, .pro .inner { padding: var(--s-5) var(--gutter); }
+  .pro { display: block; }
+  .bigA { font-size: clamp(3.2rem, 15vw, 6rem); }
+  .bigB { font-size: clamp(3rem, 14vw, 5.5rem); }
+}

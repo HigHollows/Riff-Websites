@@ -1,0 +1,29 @@
+.form { display: grid; gap: var(--s-3); }
+.tabs { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--c-line); }
+.tab { padding: 0.9rem 0.75rem; min-height: 3rem; font-family: var(--f-mono); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-mute); transition: background var(--t-fast), color var(--t-fast); }
+.tab + .tab { border-left: 1px solid var(--c-line); }
+.tab:hover { color: var(--c-paper); }
+.tab[aria-pressed='true'] { background: var(--c-paper); color: var(--c-ink); }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3) var(--s-2); }
+.field { display: grid; gap: 0.4rem; }
+.full { grid-column: 1 / -1; }
+.field span { font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-mute); }
+.field input, .field textarea { width: 100%; background: transparent; border: 0; border-bottom: 1px solid var(--c-mute); border-radius: 0; padding: 0.7rem 0; font-size: 1.05rem; transition: border-color var(--t-fast); resize: vertical; }
+.field input::placeholder { color: #5f635d; }
+.field input:hover, .field textarea:hover { border-color: var(--c-paper); }
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--c-green); box-shadow: 0 1px 0 var(--c-green); }
+.field input:focus-visible, .field textarea:focus-visible { outline: none; }
+
+.trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.consent { display: flex; gap: 0.75rem; align-items: flex-start; font-size: var(--fs-sm); color: var(--c-paper-2); }
+.consent input { appearance: none; flex: none; width: 1.25rem; height: 1.25rem; margin-top: 0.15rem; border: 1px solid var(--c-mute); background: transparent; display: grid; place-content: center; }
+.consent input::before { content: ''; width: 0.65rem; height: 0.65rem; background: var(--c-green); transform: scale(0); transition: transform var(--t-fast) var(--ease); }
+.consent input:checked::before { transform: scale(1); }
+
+.actions { display: flex; align-items: center; gap: var(--s-3); flex-wrap: wrap; }
+.status { font-size: var(--fs-sm); color: var(--c-green); max-width: 26rem; min-height: 1.4em; }
+@media (max-width: 560px) {
+  .grid { grid-template-columns: 1fr; }
+  .actions > button { width: 100%; }
+}

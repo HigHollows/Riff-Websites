@@ -1,0 +1,29 @@
+/* Boutons à angles vifs. Survol : un remplissage qui monte depuis le bas (même geste pour tous). */
+.btn {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: inline-flex; align-items: center; justify-content: space-between; gap: 1.25rem;
+  min-height: 3.25rem; padding: 0.9rem 1.25rem;
+  font-family: var(--f-mono); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  border: 1px solid transparent; border-radius: var(--r-0);
+  transition: color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+}
+.btn::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  transform: translateY(101%); transition: transform var(--t-base) var(--ease);
+}
+.btn:hover::before, .btn:focus-visible::before { transform: none; }
+.arrow { width: 1rem; flex: none; transition: transform var(--t-base) var(--ease); }
+.btn:hover .arrow { transform: translateX(4px); }
+
+.solid { background: var(--c-green); color: var(--c-green-ink); }
+.solid::before { background: var(--c-paper); }
+
+.line { border-color: currentColor; color: var(--c-paper); }
+.line::before { background: var(--c-paper); }
+.line:hover, .line:focus-visible { color: var(--c-ink); border-color: var(--c-paper); }
+
+.ink { background: var(--c-ink); color: var(--c-paper); }
+.ink::before { background: var(--c-green); }
+.ink:hover, .ink:focus-visible { color: var(--c-green-ink); }
+
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
