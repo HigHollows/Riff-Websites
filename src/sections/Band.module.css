@@ -2,7 +2,7 @@
 .row { display: flex; width: max-content; font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: clamp(3.6rem, 11vw, 10rem); line-height: 0.9; white-space: nowrap; will-change: transform; }
 .set { display: inline-flex; }
 .item { display: inline-flex; align-items: center; gap: 0.3em; padding-right: 0.3em; }
-.item i { width: 0.22em; height: 0.22em; background: var(--c-ink); flex: none; }
+.item i { border-radius: 50%; width: 0.22em; height: 0.22em; background: var(--c-ink); flex: none; }
 .set:first-child .item:nth-child(2) i { background: var(--c-green); outline: 2px solid var(--c-ink); }
 .a { transform: translateX(calc(var(--p) * -28%)); }
 .b { transform: translateX(calc(-30% + var(--p) * 28%)); color: transparent; -webkit-text-stroke: 2px var(--c-ink); }

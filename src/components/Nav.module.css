@@ -1,5 +1,5 @@
 .header { position: fixed; inset: 0 0 auto 0; z-index: var(--z-nav); transition: background var(--t-base) var(--ease), border-color var(--t-base) var(--ease); border-bottom: 1px solid transparent; }
-.scrolled { background: rgba(11, 12, 11, 0.94); border-bottom-color: var(--c-line); }
+.scrolled { background: rgba(17, 19, 21, 0.94); border-bottom-color: var(--c-line); }
 .bar { height: var(--nav-h); display: flex; align-items: center; gap: var(--s-4); position: relative; z-index: 2; }
 .brand { display: inline-flex; margin-right: auto; }
 .desktop ul { display: flex; gap: clamp(1.25rem, 2.6vw, 2.75rem); }

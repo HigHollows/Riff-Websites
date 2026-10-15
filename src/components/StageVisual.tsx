@@ -53,7 +53,7 @@ export function StageVisual({ variant = 0, sway = false, label, className = '' }
         x += w;
       }
       d += ` L${W} ${H} Z`;
-      return { d, fill: ['#101210', '#0b0c0b', '#050605'][row] };
+      return { d, fill: ['#101210', '#111315', '#050605'][row] };
     });
     return { beams, rows, flare: { x: 160 + r() * 480, y: 120 + r() * 100 } };
   }, [variant]);
@@ -72,8 +72,8 @@ export function StageVisual({ variant = 0, sway = false, label, className = '' }
             <stop offset="1" stopColor="#ecebe4" stopOpacity="0" />
           </linearGradient>
           <linearGradient id={`${uid}beamg`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#2bff73" stopOpacity="1" />
-            <stop offset="1" stopColor="#2bff73" stopOpacity="0" />
+            <stop offset="0" stopColor="#10f25a" stopOpacity="1" />
+            <stop offset="1" stopColor="#10f25a" stopOpacity="0" />
           </linearGradient>
           <radialGradient id={`${uid}haze`} cx="0.5" cy="0.62" r="0.6">
             <stop offset="0" stopColor="#ecebe4" stopOpacity="0.2" />

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="64" height="64" role="img" aria-label="RIFF">
+  <title>RIFF</title>
+  <rect width="120" height="120" rx="28" fill="#111315"/>
+  <g transform="translate(-27 28) scale(.5)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M140 120V46C140 22 154 10 172 10M196 120V46C196 22 210 10 228 10" stroke="#FFFFFF" stroke-width="30"/>
+    <path d="M116 42q10-14 20 0t20 0t20 0t20 0t20 0t20 0t20 0" stroke="#10F25A" stroke-width="22"/>
+  </g>
+</svg>

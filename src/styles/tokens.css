@@ -1,14 +1,14 @@
 /* RIFF — design tokens. Toute valeur visuelle du site passe par ici. */
 :root {
   /* Couleurs */
-  --c-ink: #0b0c0b;          /* noir charbon, surface principale */
+  --c-ink: #111315;          /* noir charbon, surface principale */
   --c-ink-2: #121412;        /* surface secondaire */
   --c-ink-3: #1b1d1b;        /* surface relevée */
   --c-line: #2b2e2b;         /* séparations */
   --c-mute: #8c908a;         /* métadonnées (contraste 5.9:1 sur --c-ink) */
   --c-paper: #ecebe4;        /* blanc cassé */
   --c-paper-2: #d9d8cf;
-  --c-green: #2bff73;        /* vert signature — usage stratégique uniquement */
+  --c-green: #10f25a;        /* vert signature — usage stratégique uniquement */
   --c-green-ink: #062611;    /* texte sur vert */
 
   /* Typographie */
@@ -37,8 +37,9 @@
   --nav-h: 64px;
 
   /* Rayons : angles vifs par défaut */
-  --r-0: 0;
-  --r-1: 2px;
+  --r-1: 8px;     /* petits éléments : champs, cases, boutons */
+  --r-2: 18px;    /* conteneurs moyens */
+  --r-3: 32px;    /* grandes surfaces : visuels, panneaux */
 
   /* Mouvement : une seule grammaire */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);   /* sortie franche, arrêt net */

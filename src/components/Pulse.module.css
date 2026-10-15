@@ -1,7 +1,7 @@
 .pulse { display: flex; align-items: flex-end; gap: 6px; width: 100%; overflow: hidden; }
-.pulse span { flex: 1 1 0; min-width: 2px; max-width: 3px; background: var(--c-line); transform-origin: bottom; }
+.pulse span { flex: 1 1 0; min-width: 2px; max-width: 3px; background: var(--c-line); border-radius: 2px; transform-origin: bottom; }
 .hot { background: var(--c-green) !important; }
-.light span { background: rgba(11, 12, 11, 0.28); }
+.light span { background: rgba(17, 19, 21, 0.28); }
 .light .hot { background: var(--c-ink) !important; }
 
 @media (prefers-reduced-motion: no-preference) {

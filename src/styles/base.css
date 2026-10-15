@@ -43,7 +43,7 @@ body::after {
 .skip-link {
   position: fixed; left: var(--gutter); top: -4rem; z-index: var(--z-skip);
   background: var(--c-green); color: var(--c-green-ink);
-  padding: 0.75rem 1rem; font-family: var(--f-mono); font-size: var(--fs-mono); text-transform: uppercase;
+  padding: 0.75rem 1rem; border-radius: var(--r-1); font-family: var(--f-mono); font-size: var(--fs-mono); text-transform: uppercase;
 }
 .skip-link:focus { top: 0.75rem; }
 

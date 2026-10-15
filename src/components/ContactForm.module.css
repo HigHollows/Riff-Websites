@@ -1,5 +1,5 @@
 .form { display: grid; gap: var(--s-3); }
-.tabs { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--c-line); }
+.tabs { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--c-line); border-radius: var(--r-2); overflow: hidden; }
 .tab { padding: 0.9rem 0.75rem; min-height: 3rem; font-family: var(--f-mono); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-mute); transition: background var(--t-fast), color var(--t-fast); }
 .tab + .tab { border-left: 1px solid var(--c-line); }
 .tab:hover { color: var(--c-paper); }
@@ -17,8 +17,8 @@
 
 .trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .consent { display: flex; gap: 0.75rem; align-items: flex-start; font-size: var(--fs-sm); color: var(--c-paper-2); }
-.consent input { appearance: none; flex: none; width: 1.25rem; height: 1.25rem; margin-top: 0.15rem; border: 1px solid var(--c-mute); background: transparent; display: grid; place-content: center; }
-.consent input::before { content: ''; width: 0.65rem; height: 0.65rem; background: var(--c-green); transform: scale(0); transition: transform var(--t-fast) var(--ease); }
+.consent input { appearance: none; flex: none; width: 1.25rem; height: 1.25rem; margin-top: 0.15rem; border: 1px solid var(--c-mute); border-radius: 6px; background: transparent; display: grid; place-content: center; }
+.consent input::before { content: ''; width: 0.65rem; height: 0.65rem; border-radius: 3px; background: var(--c-green); transform: scale(0); transition: transform var(--t-fast) var(--ease); }
 .consent input:checked::before { transform: scale(1); }
 
 .actions { display: flex; align-items: center; gap: var(--s-3); flex-wrap: wrap; }

@@ -1,4 +1,2 @@
-.logo { display: inline-flex; align-items: flex-end; gap: 0.5em; font-size: 1.9rem; line-height: 1; }
-.lg { font-size: clamp(4rem, 15vw, 14rem); gap: 0.12em; }
-.word { font-family: var(--f-display); font-weight: 900; letter-spacing: 0.01em; line-height: 0.8; }
-.mark { height: 0.62em; width: auto; fill: var(--c-green); transform: translateY(-0.03em); }
+.logo { display: block; height: 2.8rem; width: auto; aspect-ratio: 266 / 162; color: var(--c-paper); overflow: visible; }
+.lg { height: auto; width: clamp(11rem, 32vw, 24rem); }
