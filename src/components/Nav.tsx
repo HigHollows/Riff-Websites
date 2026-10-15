@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Logo } from './Logo';
 import { ButtonLink } from './Button';
-import { navItems, observedSections } from '../config/navigation';
-import { useActiveSection } from '../hooks/useActiveSection';
+import { navItems } from '../config/navigation';
 import { useScrollFrame } from '../hooks/useScrollY';
 import { useContactIntent } from '../hooks/useContactIntent';
 import styles from './Nav.module.css';
@@ -12,7 +11,6 @@ export function Nav() {
   const [open, setOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-  const active = useActiveSection(observedSections);
   const { open: goContact } = useContactIntent();
 
   useScrollFrame((y) => setScrolled((s) => (s !== y > 24 ? y > 24 : s)));
@@ -45,20 +43,6 @@ export function Nav() {
         <a href="#top" className={styles.brand} aria-label="RIFF — retour en haut de page" onClick={close}>
           <Logo />
         </a>
-
-        <nav className={styles.desktop} aria-label="Navigation principale">
-          <ul>
-            {navItems.map((n) => (
-              <li key={n.id}>
-                <a href={n.href} className={styles.link} aria-current={active === n.id ? 'true' : undefined}>{n.label}</a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <div className={styles.cta}>
-          <ButtonLink href="#parcours" variant="solid" className={styles.ctaBtn}>Travailler avec RIFF</ButtonLink>
-        </div>
 
         <button
           ref={toggleRef}
