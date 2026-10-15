@@ -1,5 +1,5 @@
 import { Button } from '../components/Button';
-import { DroneGramophone } from '../components/DroneGramophone';
+import { BrushStroke } from '../components/BrushStroke';
 import { Logo } from '../components/Logo';
 import { useContactIntent } from '../hooks/useContactIntent';
 import { navItems } from '../config/navigation';
@@ -11,7 +11,7 @@ export function Hero() {
   return (
     <section id="top" className={styles.hero} aria-labelledby="hero-title">
       <div className={styles.bg}>
-        <DroneGramophone />
+        <BrushStroke />
       </div>
 
       <div className={styles.stage}>

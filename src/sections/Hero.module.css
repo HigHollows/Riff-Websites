@@ -88,6 +88,6 @@
 }
 @media (max-width: 760px) {
   .stage { padding-top: calc(var(--nav-h) + var(--s-2)); gap: 0; }
-  .title { font-size: 7.4vw; margin-bottom: 106vw; }
+  .title { font-size: 7.4vw; margin-bottom: 70vw; }
   .entries { grid-template-columns: 1fr; gap: var(--s-3); }
 }
