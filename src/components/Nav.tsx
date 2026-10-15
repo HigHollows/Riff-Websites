@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Logo } from './Logo';
+import { Link } from '../router';
 import { ButtonLink } from './Button';
 import { navItems } from '../config/navigation';
 import { useScrollFrame } from '../hooks/useScrollY';
@@ -40,9 +41,9 @@ export function Nav() {
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
       <div className={`wrap ${styles.bar}`}>
-        <a href="#top" className={styles.brand} aria-label="RIFF — retour en haut de page" onClick={close}>
+        <Link href="/" className={styles.brand} aria-label="RIFF — accueil" onClick={close}>
           <Logo />
-        </a>
+        </Link>
 
         <button
           ref={toggleRef}
@@ -61,10 +62,10 @@ export function Nav() {
           <ul>
             {navItems.map((n, i) => (
               <li key={n.id} style={{ ['--i' as string]: i }}>
-                <a href={n.href} onClick={close} tabIndex={open ? 0 : -1}>
+                <Link href={n.href} onClick={close} tabIndex={open ? 0 : -1}>
                   <span className="mono">0{i + 1}</span>
                   <span className="display">{n.label}</span>
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

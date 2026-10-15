@@ -1,4 +1,5 @@
 import { Logo } from './Logo';
+import { Link } from '../router';
 import { Pulse } from './Pulse';
 import { navItems } from '../config/navigation';
 import { site } from '../config/site';
@@ -19,13 +20,13 @@ export function Footer() {
           <nav aria-label="Pied de page" className={styles.cols}>
             <ul>
               <li className="mono">Navigation</li>
-              {navItems.map((n) => <li key={n.id}><a href={n.href}>{n.label}</a></li>)}
+              {navItems.map((n) => <li key={n.id}><Link href={n.href}>{n.label}</Link></li>)}
             </ul>
             <ul>
               <li className="mono">Contact</li>
               {email && <li><a href={`mailto:${email}`}>{email}</a></li>}
               {phone && <li><a href={`tel:${phone.replace(/\s/g, '')}`}>{phone}</a></li>}
-              {!email && !phone && <li><a href="#contact">Formulaire de contact</a></li>}
+              {!email && !phone && <li><Link href="/#contact">Formulaire de contact</Link></li>}
               <li>{site.region}</li>
             </ul>
             {site.socials.length > 0 && (
@@ -40,7 +41,7 @@ export function Footer() {
           <span>© {new Date().getFullYear()} {site.name}</span>
           {mentions && <a href={mentions}>Mentions légales</a>}
           {privacy && <a href={privacy}>Confidentialité</a>}
-          <a href="#top" className={styles.up}>Haut de page</a>
+          <Link href="/" className={styles.up}>Haut de page</Link>
         </div>
       </div>
     </footer>

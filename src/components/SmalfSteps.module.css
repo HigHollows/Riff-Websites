@@ -1,0 +1,11 @@
+.steps { display: flex; align-items: flex-end; gap: clamp(0.5rem, 1.2vw, 1.1rem); height: 100%; width: 100%; border-bottom: 1px solid var(--c-line); }
+.col { flex: 1 1 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; gap: 0.6rem; }
+.bar { display: block; width: 100%; background: var(--c-paper); border-radius: var(--r-2) var(--r-2) 0 0; transform-origin: bottom; }
+.top { background: var(--c-green); }
+.n { color: var(--c-mute); padding-bottom: 0.6rem; }
+@media (prefers-reduced-motion: no-preference) {
+  .bar { animation: grow 1100ms var(--ease) both; animation-delay: calc(300ms + var(--i) * 110ms); }
+  .n { animation: fade 700ms var(--ease) both; animation-delay: calc(900ms + var(--i) * 80ms); }
+}
+@keyframes grow { from { transform: scaleY(0); } to { transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }

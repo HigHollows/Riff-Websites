@@ -1,0 +1,35 @@
+.hero { padding-top: calc(var(--nav-h) + var(--s-5)); padding-bottom: var(--s-6); min-height: 100svh; display: flex; }
+.grid { width: 100%; display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--s-2); row-gap: var(--s-3); align-content: center; }
+.tag { grid-column: 1 / -1; display: flex; align-items: center; gap: 0.75rem; color: var(--c-mute); }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c-green); }
+
+.title { grid-column: 1 / 8; display: grid; gap: 0.9rem; margin-top: var(--s-2); }
+.word { font-size: clamp(3.4rem, 9.5vw, 9.5rem); line-height: 1; color: var(--c-paper); }
+.full { font-family: var(--f-mono); font-size: clamp(0.8rem, 1.1vw, 1rem); letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-green); }
+
+.hook { grid-column: 1 / 7; margin-top: var(--s-3); font-size: clamp(1.25rem, 1.9vw, 1.9rem); line-height: 1.3; font-weight: 600; }
+.hook span { color: var(--c-green); }
+.intro { grid-column: 1 / 7; color: var(--c-paper-2); font-size: var(--fs-md); line-height: 1.55; max-width: 38rem; }
+.cta { grid-column: 1 / 7; display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-2); }
+.cta a { min-width: 15rem; }
+
+.visual { grid-column: 8 / -1; grid-row: 2 / 7; align-self: stretch; min-height: 20rem; max-height: 34rem; align-self: end; height: 60vh; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .tag, .word, .full, .hook, .intro, .cta { animation: rise 900ms var(--ease) both; }
+  .word { animation-delay: 150ms; }
+  .full { animation-delay: 300ms; }
+  .hook { animation-delay: 450ms; }
+  .intro { animation-delay: 600ms; }
+  .cta { animation-delay: 750ms; }
+}
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+@media (max-width: 900px) {
+  .hero { min-height: 0; padding-top: calc(var(--nav-h) + var(--s-4)); }
+  .title, .hook, .intro, .cta { grid-column: 1 / -1; }
+  .word { font-size: 17vw; }
+  .visual { grid-column: 1 / -1; grid-row: auto; height: 14rem; min-height: 0; margin-top: var(--s-4); }
+  .br { display: none; }
+  .cta a { width: 100%; }
+}

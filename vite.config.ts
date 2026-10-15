@@ -8,12 +8,14 @@ import react from '@vitejs/plugin-react';
 function siteUrlMeta(siteUrl: string | undefined): Plugin {
   return {
     name: 'riff-site-url-meta',
-    transformIndexHtml() {
+    transformIndexHtml(_html, ctx) {
       if (!siteUrl) return [];
       const base = siteUrl.replace(/\/$/, '');
+      const page = ctx.path.replace(/index\.html$/, '').replace(/\/$/, '');
+      const url = `${base}${page}/`;
       return [
-        { tag: 'link', attrs: { rel: 'canonical', href: `${base}/` }, injectTo: 'head' },
-        { tag: 'meta', attrs: { property: 'og:url', content: `${base}/` }, injectTo: 'head' },
+        { tag: 'link', attrs: { rel: 'canonical', href: url }, injectTo: 'head' },
+        { tag: 'meta', attrs: { property: 'og:url', content: url }, injectTo: 'head' },
         { tag: 'meta', attrs: { property: 'og:image', content: `${base}/og-image.png` }, injectTo: 'head' },
         { tag: 'meta', attrs: { name: 'twitter:image', content: `${base}/og-image.png` }, injectTo: 'head' },
       ];
@@ -25,6 +27,10 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', 'VITE_');
   return {
     plugins: [react(), siteUrlMeta(env.VITE_SITE_URL)],
-    build: { target: 'es2022', sourcemap: false },
+    build: {
+      target: 'es2022',
+      sourcemap: false,
+      rollupOptions: { input: { main: 'index.html', smalf: 'smalf/index.html' } },
+    },
   };
 });

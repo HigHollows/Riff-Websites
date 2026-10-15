@@ -1,0 +1,22 @@
+.section { padding-block: var(--s-6); background: var(--c-ink-2); border-block: 1px solid var(--c-line); }
+.title { font-size: var(--fs-xl); max-width: 14ch; }
+
+/* Les trois piliers montent vers la droite : progression */
+.pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-2); align-items: end; margin-top: var(--s-5); }
+.pillar { display: grid; gap: 0.9rem; align-content: start; padding: var(--s-3); border: 1px solid var(--c-line); border-radius: var(--r-3); background: var(--c-ink); color: var(--c-paper-2); min-height: calc(15rem + var(--lift) * 4rem); }
+.pillar:last-child { border-color: var(--c-green); }
+.idx { color: var(--c-green); }
+.name { font-size: clamp(1.6rem, 2.6vw, 2.6rem); color: var(--c-paper); }
+
+.objectives { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--s-2); margin-top: var(--s-6); }
+.objHead { grid-column: 1 / 4; color: var(--c-mute); padding-top: 1.2rem; }
+.objectives ol { grid-column: 4 / -1; border-top: 1px solid var(--c-line); }
+.objectives li { display: grid; grid-template-columns: 3.5rem 1fr; gap: var(--s-2); align-items: baseline; padding-block: 1.1rem; border-bottom: 1px solid var(--c-line); font-size: var(--fs-md); }
+.num { font-size: 1.8rem; color: var(--c-green); }
+
+@media (max-width: 900px) {
+  .pillars { grid-template-columns: 1fr; }
+  .pillar { min-height: 0; }
+  .objHead, .objectives ol { grid-column: 1 / -1; }
+  .objHead { padding-bottom: var(--s-2); }
+}

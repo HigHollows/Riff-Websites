@@ -2,6 +2,7 @@ import { Button } from '../components/Button';
 import { Logo } from '../components/Logo';
 import { useContactIntent } from '../hooks/useContactIntent';
 import { navItems } from '../config/navigation';
+import { Link } from '../router';
 import { site } from '../config/site';
 import styles from './Hero.module.css';
 
@@ -32,7 +33,7 @@ export function Hero() {
           <ul>
             {navItems.map((n, i) => (
               <li key={n.id} style={{ ['--i' as string]: i }}>
-                <a href={n.href}>{n.label.toLowerCase()}</a>
+                <Link href={n.href}>{n.label.toLowerCase()}</Link>
               </li>
             ))}
           </ul>

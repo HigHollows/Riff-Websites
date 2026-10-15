@@ -1,0 +1,13 @@
+.section { padding-block: var(--s-6); border-top: 1px solid var(--c-line); }
+.grid { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--s-2); row-gap: var(--s-4); align-items: end; }
+.text { grid-column: 1 / 8; display: grid; gap: var(--s-3); justify-items: start; }
+.text > :global(.mono) { color: var(--c-green); }
+.title { display: grid; gap: 0.8rem; }
+.title span { font-size: clamp(3rem, 8vw, 8rem); line-height: 1; }
+.title small { font-family: var(--f-mono); font-size: clamp(0.75rem, 1vw, 0.95rem); letter-spacing: 0.14em; color: var(--c-mute); }
+.lead { font-size: var(--fs-md); line-height: 1.5; color: var(--c-paper-2); max-width: 34rem; }
+.visual { grid-column: 9 / -1; height: 16rem; }
+@media (max-width: 900px) {
+  .text, .visual { grid-column: 1 / -1; }
+  .title span { font-size: 15vw; }
+}

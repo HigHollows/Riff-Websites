@@ -32,9 +32,15 @@ Ordre de priorité : endpoint (POST JSON) > `mailto:` > message explicite « non
 
 Ajouter un objet dans `src/data/artists.ts` (nom, genre, description, image avec crédit, liens). Tant que le tableau est vide, la section affiche l'état « roster en construction ». En dev, `?roster=preview` affiche des données fictives pour tester la mise en page.
 
-## Ajouter des pages
+## Pages et routage
 
-`src/pages/Home.tsx` assemble les sections. Installer `react-router-dom`, router dans `src/App.tsx`, puis pointer `src/config/navigation.ts` vers les routes.
+Deux pages : `/` (`src/pages/Home.tsx`) et `/smalf` (`src/pages/Smalf.tsx`). Le routage est un petit module maison (`src/router.tsx`, history API, aucune dépendance).
+Pour ajouter une page : créer `src/pages/<Nom>.tsx`, la déclarer dans `routes` (`src/App.tsx`), copier `smalf/index.html` en `<nom>/index.html` (titre, description et Open Graph propres, utiles aux robots et aux partages), l'ajouter à `build.rollupOptions.input` (`vite.config.ts`), puis l'ajouter dans `src/config/navigation.ts`.
+
+## SMALF — Scène Musicale À La Française
+
+Contenu de la page : `src/data/smalf.ts` (textes, objectifs, piliers, pistes d'action). Rien n'y affirme de résultat ni de partenariat : les éléments non confirmés sont des « ambitions ».
+Pour annoncer un artiste ou une initiative réellement associés à SMALF, ajouter un objet à `smalfInitiatives` : la section bascule d'« Une scène en construction » à « Les initiatives SMALF ».
 
 ## Design
 

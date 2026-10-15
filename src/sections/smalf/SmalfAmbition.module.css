@@ -1,0 +1,6 @@
+.section { padding-block: var(--s-6); border-top: 1px solid var(--c-line); }
+.statement { font-size: clamp(1.5rem, 3.3vw, 3.3rem); line-height: 1.14; max-width: 26ch; text-wrap: balance; }
+.cols { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--s-2); row-gap: var(--s-3); margin-top: var(--s-5); font-size: var(--fs-md); line-height: 1.55; color: var(--c-paper-2); }
+.cols p:nth-child(1) { grid-column: 1 / 7; }
+.cols p:nth-child(2) { grid-column: 8 / -1; }
+@media (max-width: 900px) { .cols p:nth-child(n) { grid-column: 1 / -1; } }

@@ -5,12 +5,11 @@ import { Band } from '../sections/Band';
 import { Artists } from '../sections/Artists';
 import { Services } from '../sections/Services';
 import { Manifesto } from '../sections/Manifesto';
+import { SmalfTeaser } from '../sections/SmalfTeaser';
 import { Paths } from '../sections/Paths';
 import { Contact } from '../sections/Contact';
-import { useReveal } from '../hooks/useReveal';
 
 export function Home() {
-  useReveal();
   return (
     <>
       <a className="skip-link" href="#main">Aller au contenu</a>
@@ -21,6 +20,7 @@ export function Home() {
         <Artists />
         <Services />
         <Manifesto />
+        <SmalfTeaser />
         <Paths />
         <Contact />
       </main>

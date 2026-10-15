@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 /** Observe tous les [data-reveal] et ajoute .is-in à la première entrée dans le viewport. Une seule instance, globale. */
-export function useReveal() {
+export function useReveal(dep?: unknown) {
   useEffect(() => {
     const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
     if (!('IntersectionObserver' in window)) {
@@ -21,5 +21,5 @@ export function useReveal() {
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
-  }, []);
+  }, [dep]);
 }
