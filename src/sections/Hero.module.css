@@ -1,8 +1,37 @@
 .hero { position: relative; min-height: 100svh; display: flex; overflow: clip; }
-.bg { position: absolute; inset: 0; z-index: 0; }
 .stage { position: relative; z-index: 1; width: 100%; min-height: 100svh; }
 
-/* — Éléments posés sur la scène (desktop) — */
+/* — Axe central : titre, logo, accroche et accès, centrés — */
+.center {
+  position: absolute; left: 50%; top: calc(var(--nav-h) + 5vh); transform: translateX(-50%);
+  width: min(42rem, 54vw); display: flex; flex-direction: column; align-items: center; text-align: center; gap: clamp(1.25rem, 3.6vh, 2.5rem);
+}
+
+.title { font-size: min(3vw, 4.8vh, 3.6rem); line-height: 1.06; white-space: nowrap; }
+.line { display: block; overflow: hidden; padding-block: 0.16em 0.04em; margin-block: -0.16em -0.04em; }
+.line > span { display: inline-block; }
+.line b { color: var(--c-paper); font-weight: inherit; }
+.green > span { color: var(--c-green); }
+
+/* Logo officiel (version blanche) : grande signature au centre */
+.mark { width: min(28vw, 44vh, 26rem); color: #fff; }
+.mark svg { width: 100%; height: auto; aspect-ratio: 266 / 162; display: block; }
+
+.foot { display: grid; gap: var(--s-3); width: 100%; justify-items: center; }
+.sub { font-size: 1rem; line-height: 1.5; color: var(--c-paper-2); max-width: 30rem; }
+.entries { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: var(--s-3); align-items: end; width: 100%; max-width: 34rem; text-align: left; }
+.entry { display: grid; gap: 0.6rem; color: var(--c-mute); }
+.entry :global(button) { white-space: nowrap; }
+.textLink {
+  display: inline-flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 3.25rem;
+  font-family: var(--f-mono); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-paper);
+  border-bottom: 1px solid var(--c-paper); transition: color var(--t-fast), border-color var(--t-fast);
+}
+.textLink svg { width: 1rem; transition: transform var(--t-base) var(--ease); }
+.textLink:hover { color: var(--c-green); border-color: var(--c-green); }
+.textLink:hover svg { transform: translateX(4px); }
+
+/* — Éléments sur les bords (desktop) — */
 .play {
   position: absolute; left: clamp(2.5rem, 7vw, 7rem); top: calc(var(--nav-h) + 6vh);
   width: clamp(3rem, 4.6vw, 4.8rem); color: var(--c-green); display: block;
@@ -10,9 +39,6 @@
 }
 .play svg { width: 100%; height: auto; display: block; }
 .play:hover { transform: translateX(6px) scale(1.06); }
-
-.logoBig { position: absolute; left: 66%; top: calc(var(--nav-h) + 3vh); width: clamp(11rem, 17vw, 19rem); }
-.logoBig svg { width: 100%; height: auto; aspect-ratio: 266 / 162; }
 
 .side {
   position: absolute; left: 0.9rem; top: 50%; display: flex; gap: 1.6rem; color: var(--c-mute);
@@ -27,25 +53,6 @@
   color: var(--c-paper); text-transform: lowercase; transition: color var(--t-fast), transform var(--t-base) var(--ease);
 }
 .bigNav a:hover, .bigNav a:focus-visible { color: var(--c-green); transform: translateX(-10px); }
-
-.title { position: absolute; left: var(--gutter); top: calc(var(--nav-h) + 24vh); font-size: min(2.25vw, 3rem); line-height: 1.06; white-space: nowrap; }
-.line { display: block; overflow: hidden; padding-block: 0.16em 0.04em; margin-block: -0.16em -0.04em; }
-.line > span { display: inline-block; }
-.line b { color: var(--c-paper); font-weight: inherit; }
-.green > span { color: var(--c-green); }
-
-.foot { position: absolute; right: var(--gutter); bottom: 5vh; width: min(31rem, 36vw); display: grid; gap: var(--s-3); }
-.sub { font-size: 1rem; line-height: 1.5; color: var(--c-paper-2); }
-.entries { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: var(--s-3); align-items: end; }
-.entry { display: grid; gap: 0.6rem; color: var(--c-mute); }
-.textLink {
-  display: inline-flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 3.25rem;
-  font-family: var(--f-mono); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-paper);
-  border-bottom: 1px solid var(--c-paper); transition: color var(--t-fast), border-color var(--t-fast);
-}
-.textLink svg { width: 1rem; transition: transform var(--t-base) var(--ease); }
-.textLink:hover { color: var(--c-green); border-color: var(--c-green); }
-.textLink:hover svg { transform: translateX(4px); }
 
 /* Entrée : CSS pur, sans dépendance JS. Aucun contenu n'est caché si les animations sont coupées. */
 @media (prefers-reduced-motion: no-preference) {
@@ -62,13 +69,20 @@
   .green:nth-child(4) > span { animation-delay: 270ms, 1250ms; }
   .green b { -webkit-text-fill-color: var(--c-paper); }
 
+  /* Le logo se trace : les lettres se dessinent, puis l'onde et le point apparaissent */
+  .mark path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1100ms var(--ease-in-out) both; }
+  .mark path:nth-of-type(1) { animation-delay: 400ms; }
+  .mark path:nth-of-type(2) { animation-delay: 520ms; }
+  .mark path:nth-of-type(3) { animation-delay: 640ms; }
+  .mark path:nth-of-type(4) { animation-delay: 760ms; }
+  .mark path:nth-of-type(5) { animation-delay: 1000ms; }
+  .mark circle { transform-box: fill-box; transform-origin: center; animation: dot 600ms var(--ease) 1250ms both; }
   .play { animation: pop 800ms var(--ease) 250ms both; }
-  .logoBig { animation: fade 1000ms var(--ease) 500ms both; }
   .side { animation: fadeOnly 1000ms var(--ease) 900ms both; }
   .bigNav li { animation: slideIn 800ms var(--ease) both; animation-delay: calc(700ms + var(--i) * 90ms); }
-  .sub { animation: fade 900ms var(--ease) 800ms both; }
-  .entry:nth-child(1) { animation: fade 900ms var(--ease) 950ms both; }
-  .entry:nth-child(2) { animation: fade 900ms var(--ease) 1070ms both; }
+  .sub { animation: fade 900ms var(--ease) 900ms both; }
+  .entry:nth-child(1) { animation: fade 900ms var(--ease) 1050ms both; }
+  .entry:nth-child(2) { animation: fade 900ms var(--ease) 1170ms both; }
 }
 @keyframes rise { from { transform: translateY(105%); } to { transform: none; } }
 @keyframes sheen { from { background-position: 100% 0; } to { background-position: 0 0; } }
@@ -76,18 +90,18 @@
 @keyframes fadeOnly { from { opacity: 0; } to { opacity: 1; } }
 @keyframes pop { from { opacity: 0; transform: translateX(-24px) scale(0.7); } to { opacity: 1; transform: none; } }
 @keyframes slideIn { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: none; } }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes dot { from { transform: scale(0); } to { transform: none; } }
 
-/* — Tablette et mobile : mise en page en flux, le visuel reste en fond — */
+/* — Tablette et mobile : tout dans le flux, centré — */
 @media (max-width: 1100px) {
-  .stage { display: flex; flex-direction: column; justify-content: space-between; padding: calc(var(--nav-h) + var(--s-4)) var(--gutter) var(--s-4); gap: var(--s-4); }
-  .play, .logoBig, .side, .bigNav { display: none; }
-  .title, .foot { position: static; width: auto; }
-  .title { font-size: min(6.4vw, 5.4rem); }
-  .foot { max-width: 34rem; }
-  .sub { font-size: var(--fs-md); color: var(--c-paper); }
+  .play, .side, .bigNav { display: none; }
+  .center { position: static; transform: none; width: auto; padding: calc(var(--nav-h) + var(--s-4)) var(--gutter) var(--s-5); margin-inline: auto; max-width: 36rem; min-height: 100svh; justify-content: center; }
+  .title { font-size: min(6vw, 3.4rem); }
+  .mark { width: min(62vw, 22rem); }
+  .sub { font-size: var(--fs-md); }
 }
 @media (max-width: 760px) {
-  .stage { padding-top: calc(var(--nav-h) + var(--s-2)); gap: 0; }
-  .title { font-size: 7.4vw; margin-bottom: 70vw; }
+  .title { font-size: 6.6vw; }
   .entries { grid-template-columns: 1fr; gap: var(--s-3); }
 }
