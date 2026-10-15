@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/artistes/:slug", "destination": "/index.html" }
+  ]
+}

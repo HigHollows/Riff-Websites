@@ -1,86 +1,43 @@
-import { artists as realArtists, rosterSlots, type Artist } from '../data/artists';
-import { previewArtists } from '../data/artists.preview';
-import { StageVisual } from '../components/StageVisual';
-import { Photo } from '../components/Photo';
-import { photos } from '../data/photos';
+import { artists } from '../data/artists';
 import { SectionHead } from '../components/SectionHead';
-import { ButtonLink } from '../components/Button';
 import { useContactIntent } from '../hooks/useContactIntent';
+import { Link } from '../router';
 import styles from './Artists.module.css';
 
-/** En développement uniquement : ?roster=preview affiche des données fictives pour vérifier la mise en page. */
-const artists: Artist[] =
-  import.meta.env.DEV && new URLSearchParams(window.location.search).get('roster') === 'preview' ? previewArtists : realArtists;
-
-function ArtistEntry({ artist, index }: { artist: Artist; index: number }) {
-  return (
-    <article className={`${styles.entry} ${index % 2 ? styles.flip : ''}`} data-reveal>
-      <div className={styles.media}>
-        {artist.image ? (
-          <img src={artist.image.src} alt={artist.image.alt} width={artist.image.width} height={artist.image.height} loading="lazy" decoding="async" />
-        ) : (
-          <StageVisual variant={index + 10} label={`Visuel provisoire pour ${artist.name}`} />
-        )}
-        {artist.image?.credit && <p className={`mono ${styles.credit}`}>Photo : {artist.image.credit}</p>}
-      </div>
-      <div className={styles.body}>
-        <p className={`mono ${styles.genre}`}>{String(index + 1).padStart(2, '0')} — {artist.genre}</p>
-        <h3 className={`display ${styles.name}`}>{artist.name}</h3>
-        <p className={styles.desc}>{artist.description}</p>
-        {artist.links && artist.links.length > 0 && (
-          <ul className={styles.links}>
-            {artist.links.map((l) => (
-              <li key={l.href}><a href={l.href} target="_blank" rel="noopener noreferrer">{l.label}</a></li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </article>
-  );
-}
-
+/** Roster : un carré par groupe (logo), chaque carré ouvre la page du groupe. */
 export function Artists() {
   const { open } = useContactIntent();
-  const hasRoster = artists.length > 0;
   return (
     <section id="artistes" className={styles.section} aria-labelledby="artistes-title">
       <div className="wrap">
         <SectionHead index="01" label="Artistes" />
+        <div className={styles.head}>
+          <h2 id="artistes-title" className={`display ${styles.title}`} data-reveal>Le roster</h2>
+          <p className={styles.lead} data-reveal style={{ ['--i' as string]: 1 }}>
+            Les groupes accompagnés par RIFF. Un clic sur un carré ouvre la page du groupe : photos, musique et liens officiels.
+          </p>
+        </div>
 
-        {hasRoster ? (
-          <>
-            <h2 id="artistes-title" className={`display ${styles.title}`} data-reveal>Sur scène,<br />avec RIFF</h2>
-            <div className={styles.list}>
-              {artists.map((a, i) => <ArtistEntry key={a.slug} artist={a} index={i} />)}
-            </div>
-          </>
-        ) : (
-          <>
-            <div className={styles.intro}>
-              <h2 id="artistes-title" className={`display ${styles.title}`} data-reveal>
-                Le roster<br />se construit<span>.</span>
-              </h2>
-              <div className={styles.side} data-reveal style={{ ['--i' as string]: 2 }}>
-                <p>
-                  Les premiers groupes accompagnés seront présentés ici, un par un, avec l’accord de chacun. Pas de liste gonflée : seulement des artistes avec qui le travail a réellement commencé. En attendant, voici l’endroit où tout se joue : la scène.
-                </p>
-                <ButtonLink href="#contact" variant="line" onClick={(e) => { e.preventDefault(); open('artiste'); }}>
-                  Rejoindre la conversation
-                </ButtonLink>
-              </div>
-            </div>
-
-            <ul className={styles.slots}>
-              {rosterSlots.map((s, i) => (
-                <li key={s.id} className={`${styles.slot} ${styles['slot' + s.id]}`} data-reveal style={{ ['--i' as string]: i }}>
-                  <Photo photo={photos[s.photo]} />
-                  <span className={`display ${styles.slotNum}`} aria-hidden="true">{s.id}</span>
-                  <p className={`mono ${styles.slotLabel}`}>Scène {s.id}<br /><span>Instantané live</span></p>
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
+        <ul className={styles.grid}>
+          {artists.map((a, i) => (
+            <li key={a.slug} data-reveal style={{ ['--i' as string]: i }}>
+              <Link href={`/artistes/${a.slug}`} className={styles.tile} aria-label={`${a.name} — voir la page du groupe`}>
+                {a.logo ? (
+                  <img src={a.logo.src} alt={a.logo.alt} width={a.logo.width} height={a.logo.height} loading="lazy" decoding="async" className={styles.logo} />
+                ) : (
+                  <span className={`display ${styles.word}`} style={{ ['--len' as string]: a.name.length }}>{a.name}</span>
+                )}
+                <span className={`mono ${styles.cta}`}>Voir le groupe <i aria-hidden="true">→</i></span>
+              </Link>
+            </li>
+          ))}
+          <li data-reveal style={{ ['--i' as string]: artists.length }}>
+            <a href="/#contact" className={`${styles.tile} ${styles.next}`} onClick={(e) => { e.preventDefault(); open('artiste'); }}>
+              <span className={`display ${styles.nextText}`}>Votre groupe ?</span>
+              <span className={`mono ${styles.cta}`}>Présenter mon projet <i aria-hidden="true">→</i></span>
+            </a>
+          </li>
+        </ul>
       </div>
     </section>
   );
