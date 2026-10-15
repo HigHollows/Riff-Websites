@@ -11,7 +11,7 @@
 .kicker { grid-column: 1 / -1; grid-row: 1; display: flex; align-items: center; gap: 0.75rem; color: var(--c-mute); padding-bottom: var(--s-3); }
 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c-green); flex: none; }
 
-.title { grid-column: 1 / 9; grid-row: 2; align-self: center; font-size: min(4.9vw, 5.8rem); line-height: 1.04; padding-block: var(--s-3); white-space: nowrap; }
+.title { grid-column: 1 / 9; grid-row: 2; align-self: center; font-size: min(4.5vw, 5.6rem); line-height: 1.04; padding-block: var(--s-3); white-space: nowrap; }
 .line { display: block; overflow: hidden; padding-block: 0.16em 0.04em; margin-block: -0.16em -0.04em; }
 .line > span { display: inline-block; }
 .line b { color: var(--c-paper); font-weight: inherit; }
@@ -29,12 +29,6 @@
 .textLink svg { width: 1rem; transition: transform var(--t-base) var(--ease); }
 .textLink:hover { color: var(--c-green); border-color: var(--c-green); }
 .textLink:hover svg { transform: translateX(4px); }
-
-/* Indication de défilement : un filet vert qui coule */
-.hint { grid-column: 12 / -1; grid-row: 3; justify-self: end; align-self: end; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; color: var(--c-mute); }
-.hint i { display: block; width: 2px; height: 3.5rem; background: var(--c-line); position: relative; overflow: hidden; border-radius: 2px; }
-.hint i::after { content: ''; position: absolute; inset: 0; background: var(--c-green); transform: translateY(-100%); }
-.hint:hover { color: var(--c-paper); }
 
 /* Entrée : CSS pur, sans dépendance JS. Aucun contenu n'est caché si les animations sont coupées. */
 @media (prefers-reduced-motion: no-preference) {
@@ -57,13 +51,10 @@
   .sub { animation: fade 900ms var(--ease) 700ms both; }
   .entry:nth-child(1) { animation: fade 900ms var(--ease) 880ms both; }
   .entry:nth-child(2) { animation: fade 900ms var(--ease) 1000ms both; }
-  .hint { animation: fade 900ms var(--ease) 1400ms both; }
-  .hint i::after { animation: drip 2.2s var(--ease-in-out) 1800ms infinite; }
 }
 @keyframes rise { from { transform: translateY(105%); } to { transform: none; } }
 @keyframes sheen { from { background-position: 100% 0; } to { background-position: 0 0; } }
 @keyframes fade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-@keyframes drip { 0% { transform: translateY(-100%); } 60%, 100% { transform: translateY(100%); } }
 
 @media (max-width: 1100px) {
   .title { grid-column: 1 / -1; font-size: min(6.4vw, 6rem); }
@@ -75,6 +66,5 @@
   .title { font-size: 7.4vw; padding-block: var(--s-2) var(--s-3); align-self: start; margin-bottom: 96vw; }
   .foot { grid-column: 1 / -1; }
   .entries { grid-template-columns: 1fr; gap: var(--s-3); }
-  .hint { display: none; }
   .bg::after { background: none; }
 }

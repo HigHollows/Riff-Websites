@@ -142,7 +142,7 @@ function makeSprite(rgb: string) {
 }
 
 // Emprise réelle de la figure dans le repère 400×400 (centre et dimensions)
-const FX = 195, FY = 218, FW = 310, FH = 340;
+const FX = 207, FY = 215, FW = 324, FH = 345;
 const ASSEMBLE = 1700;
 const SPIN = 1.7; // rad/s
 
@@ -171,14 +171,23 @@ export function DroneGramophone() {
       // Le gramophone remplit le fond du hero : grand et décalé à droite sur desktop, centré derrière le texte sur mobile
       const mobile = w < 760;
       const tablet = !mobile && w < 1100;
-      // Mobile : la figure s'installe dans l'espace laissé entre le titre (haut) et les boutons (bas)
-      const gapTop = 235, gapBottom = 345;
-      const gap = Math.max(240, h - gapTop - gapBottom);
-      scale = mobile
-        ? Math.min((w * 0.9) / FW, (gap * 0.98) / FH)
-        : Math.min((h * 0.96) / FH, (w * (tablet ? 0.6 : 0.46)) / FW);
-      const cx = w * (mobile ? 0.5 : tablet ? 0.64 : 0.68);
-      const cy = mobile ? gapTop + gap / 2 : h * 0.54;
+      // La figure est toujours entièrement visible : bornée par la hauteur de l'écran et par la zone à droite du texte
+      const vh = Math.min(h, window.innerHeight);
+      const m = Math.max(24, w * 0.03);
+      let cx: number, cy: number;
+      if (mobile) {
+        // Mobile : la figure s'installe dans l'espace laissé entre le titre (haut) et les boutons (bas)
+        const gapTop = 235, gapBottom = 345;
+        const gap = Math.max(240, h - gapTop - gapBottom);
+        scale = Math.min((w * 0.9) / FW, (gap * 0.96) / FH);
+        cx = w / 2;
+        cy = gapTop + gap / 2;
+      } else {
+        const zone = w * (tablet ? 0.62 : 0.46); // largeur de la zone réservée au gramophone (à droite)
+        scale = Math.min((vh * (tablet ? 0.62 : 0.8)) / FH, (zone - m) / FW);
+        cx = w - m - (FW * scale) / 2;
+        cy = vh * (tablet ? 0.54 : 0.56);
+      }
       ox = cx - FX * scale;
       oy = cy - FY * scale;
     };
@@ -219,7 +228,7 @@ export function DroneGramophone() {
         y += d.ry * away * 150 - away * 40;
         const twinkle = reduce ? 1 : 0.82 + 0.18 * Math.sin(sec * 2.2 + d.phase * 3);
         ctx.globalAlpha = Math.min(1, e * 1.2) * twinkle * (1 - away * 0.9);
-        const s = d.size * Math.min(scale, 1.9) * 3.4;
+        const r = Math.max(1.2, d.size * Math.min(scale, 1.9) * 0.8);
         let px = ox + x * scale;
         let py = oy + y * scale;
         // Le curseur repousse les points proches, comme une perturbation dans la flotte
@@ -230,7 +239,15 @@ export function DroneGramophone() {
           px += (ddx / dd) * push;
           py += (ddy / dd) * push;
         }
-        ctx.drawImage(d.green ? green : white, px - s, py - s, s * 2, s * 2);
+        const a = ctx.globalAlpha;
+        // Halo très léger, puis un cœur net : points nets, pas de flou
+        ctx.globalAlpha = a * 0.28;
+        ctx.drawImage(d.green ? green : white, px - r * 3, py - r * 3, r * 6, r * 6);
+        ctx.globalAlpha = a;
+        ctx.fillStyle = d.green ? '#10f25a' : '#ecebe4';
+        ctx.beginPath();
+        ctx.arc(px, py, r, 0, Math.PI * 2);
+        ctx.fill();
       }
       ctx.globalAlpha = 1;
       ctx.globalCompositeOperation = 'source-over';

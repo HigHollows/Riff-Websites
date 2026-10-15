@@ -44,10 +44,6 @@ export function Hero() {
           </div>
         </div>
 
-        <a href="#artistes" className={`mono ${styles.hint}`}>
-          <span>Défiler</span>
-          <i aria-hidden="true" />
-        </a>
       </div>
     </section>
   );
