@@ -21,7 +21,7 @@ export function Services() {
             {services.map((s, i) => {
               const isOpen = openId === s.id;
               return (
-                <li key={s.id} className={`${styles.item} ${isOpen ? styles.open : ''}`} data-reveal style={{ ['--i' as string]: i }}>
+                <li key={s.id} className={styles.item} data-open={isOpen} data-reveal style={{ ['--i' as string]: i }}>
                   <h3>
                     <button
                       className={styles.trigger}
