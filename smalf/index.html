@@ -17,7 +17,7 @@
     <script type="application/ld+json">
       {"@context":"https://schema.org","@type":"Organization","name":"RIFF","description":"Agence indépendante de booking, de management et d’accompagnement d’artistes rock et metal.","areaServed":"Auvergne-Rhône-Alpes"}
     </script>
-    <script>document.documentElement.classList.add('js');</script>
+    <script>document.documentElement.classList.add('js');try{if(!sessionStorage.getItem('riff-preloaded')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('preloading')}catch(e){}</script>
   </head>
   <body>
     <div id="root"></div>

@@ -1,5 +1,6 @@
 import { useEffect, type JSX } from 'react';
 import { ContactIntentProvider } from './hooks/useContactIntent';
+import { Preloader } from './components/Preloader';
 import { useReveal } from './hooks/useReveal';
 import { smalfMeta } from './data/smalf';
 import { usePath } from './router';
@@ -49,6 +50,7 @@ export function App() {
 
   return (
     <ContactIntentProvider>
+      <Preloader />
       {route.element}
     </ContactIntentProvider>
   );

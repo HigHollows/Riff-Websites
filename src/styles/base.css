@@ -14,6 +14,11 @@ body {
   overflow-x: clip;
 }
 body.menu-open { overflow: hidden; }
+
+/* Écran d'ouverture : pas de défilement, et les animations d'entrée du site attendent la levée du rideau */
+html.preloading { overflow: hidden; }
+html.preloading main *, html.preloading main *::before, html.preloading main *::after,
+html.preloading header *, html.preloading header *::before, html.preloading header *::after { animation-play-state: paused !important; }
 img, svg { display: block; max-width: 100%; }
 h1, h2, h3, h4, p, ul, ol, figure, dl, dd { margin: 0; }
 ul, ol { padding: 0; list-style: none; }
