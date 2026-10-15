@@ -13,7 +13,7 @@
 .slot01 { grid-column: 1 / 6; aspect-ratio: 4 / 5; }
 .slot02 { grid-column: 6 / 10; aspect-ratio: 3 / 4; margin-top: clamp(3rem, 9vw, 9rem); }
 .slot03 { grid-column: 10 / -1; aspect-ratio: 2 / 3; margin-top: clamp(1rem, 3vw, 3rem); }
-.slotNum { position: absolute; left: 0.75rem; top: 0.5rem; font-size: clamp(4rem, 8vw, 8rem); color: transparent; -webkit-text-stroke: 1.5px var(--c-paper); z-index: 2; opacity: 0.9; }
+.slotNum { position: absolute; left: 0.75rem; top: 0.5rem; font-size: clamp(2.2rem, 4.5vw, 4.5rem); color: var(--c-paper); z-index: 2; }
 .slotLabel { position: absolute; left: 0.9rem; right: 0.9rem; bottom: 0.9rem; z-index: 2; line-height: 1.5; }
 .slotLabel span { color: var(--c-green); }
 

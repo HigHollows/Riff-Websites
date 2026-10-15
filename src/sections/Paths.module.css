@@ -8,9 +8,9 @@
 .artist :global(.mono) { color: rgba(17, 19, 21, 0.62); }
 .pro :global(.mono) { color: var(--c-green); }
 
-.bigA { font-size: clamp(3.2rem, 6.8vw, 7.2rem); line-height: 0.86; }
+.bigA { font-size: clamp(1.7rem, 3.4vw, 3.5rem); line-height: 1.1; }
 .bigA span { color: var(--c-ink); }
-.bigB { font-size: clamp(2.8rem, 5vw, 5.2rem); line-height: 0.88; }
+.bigB { font-size: clamp(1.6rem, 2.7vw, 2.8rem); line-height: 1.12; }
 .bigB span { color: var(--c-green); }
 .text { max-width: 30rem; font-size: var(--fs-md); line-height: 1.5; }
 .artist .text { color: rgba(17, 19, 21, 0.82); }
@@ -18,7 +18,7 @@
 
 /* Axe de liaison */
 .axis { position: relative; border-radius: var(--r-2); margin-inline: 0.5rem; background: var(--c-green); color: var(--c-green-ink); display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.axisWord { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 2.4rem; letter-spacing: 0.12em; }
+.axisWord { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 1.6rem; letter-spacing: 0.1em; }
 
 @media (max-width: 900px) {
   .stage { grid-template-columns: 1fr; min-height: 0; }
@@ -27,6 +27,6 @@
   .axis { height: 3rem; }
   .axisWord { writing-mode: horizontal-tb; transform: none; font-size: 1.6rem; }
   .pro { display: block; }
-  .bigA { font-size: clamp(3.2rem, 15vw, 6rem); }
-  .bigB { font-size: clamp(3rem, 14vw, 5.5rem); }
+  .bigA { font-size: clamp(1.6rem, 7.4vw, 3.4rem); }
+  .bigB { font-size: clamp(1.5rem, 6.8vw, 3.2rem); }
 }

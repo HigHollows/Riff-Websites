@@ -12,14 +12,13 @@
   --c-green-ink: #062611;    /* texte sur vert */
 
   /* Typographie */
-  --f-display: 'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif;
+  --f-display: 'Climate Crisis', Impact, 'Arial Black', sans-serif;
   --f-body: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --f-mono: 'DM Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
-  --fs-hero: clamp(4rem, 13.2vw, 13.5rem);
-  --fs-xxl: clamp(3.2rem, 9vw, 9rem);
-  --fs-xl: clamp(2.6rem, 6vw, 6rem);
-  --fs-lg: clamp(1.9rem, 3.4vw, 3.2rem);
+  --fs-xxl: clamp(1.9rem, 5.2vw, 5.4rem);
+  --fs-xl: clamp(1.7rem, 3.8vw, 3.8rem);
+  --fs-lg: clamp(1.3rem, 2.4vw, 2.4rem);
   --fs-md: clamp(1.15rem, 1.5vw, 1.4rem);
   --fs-base: 1.0625rem;
   --fs-sm: 0.9rem;

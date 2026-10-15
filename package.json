@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@fontsource/big-shoulders-display": "^5.3.0",
+    "@fontsource/climate-crisis": "^5.3.0",
     "@fontsource/dm-mono": "^5.3.0",
     "@fontsource/hanken-grotesk": "^5.3.0",
     "react": "^19.3.1",

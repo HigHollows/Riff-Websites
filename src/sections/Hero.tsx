@@ -24,10 +24,10 @@ export function Hero() {
         </figure>
 
         <h1 id="hero-title" className={`display ${styles.title}`}>
-          <span className={styles.line}><span>Faire émerger</span></span>
-          <span className={styles.line}><span>les groupes<b>.</b></span></span>
-          <span className={`${styles.line} ${styles.outline}`}><span>Faire vibrer</span></span>
-          <span className={`${styles.line} ${styles.outline}`}><span>les scènes<b>.</b></span></span>
+          <span className={`${styles.line} ${styles.wide}`}><span>Faire émerger</span></span>
+          <span className={`${styles.line} ${styles.wide}`}><span>les groupes<b>.</b></span></span>
+          <span className={`${styles.line} ${styles.outline} ${styles.narrow}`}><span>Faire vibrer</span></span>
+          <span className={`${styles.line} ${styles.outline} ${styles.narrow}`}><span>les scènes<b>.</b></span></span>
         </h1>
 
         <div className={styles.foot}>

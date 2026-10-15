@@ -6,7 +6,7 @@
 .list { grid-column: 6 / -1; border-top: 1px solid var(--c-line); }
 .item { border-bottom: 1px solid var(--c-line); }
 .trigger { width: 100%; display: grid; grid-template-columns: 3.5rem 1fr auto; align-items: baseline; gap: var(--s-2); padding-block: clamp(1.1rem, 2.2vw, 2rem); text-align: left; transition: color var(--t-fast); }
-.name { font-size: clamp(2.4rem, 6vw, 5.6rem); transition: transform var(--t-base) var(--ease), color var(--t-fast); }
+.name { font-size: clamp(1.35rem, 3.2vw, 3.2rem); transition: transform var(--t-base) var(--ease), color var(--t-fast); }
 .num { color: var(--c-mute); transition: color var(--t-fast); }
 .trigger:hover .name { transform: translateX(10px); }
 .trigger:hover .num, .item[data-open='true'] .num { color: var(--c-green); }

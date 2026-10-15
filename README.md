@@ -38,4 +38,4 @@ Ajouter un objet dans `src/data/artists.ts` (nom, genre, description, image avec
 
 ## Design
 
-Tokens (couleurs, polices, espacements, durées, courbes) : `src/styles/tokens.css`. Polices auto-hébergées (Big Shoulders Display, Hanken Grotesk, DM Mono) via `@fontsource` : aucune requête tierce.
+Tokens (couleurs, polices, espacements, durées, courbes) : `src/styles/tokens.css`. Polices auto-hébergées (Climate Crisis, Hanken Grotesk, DM Mono) via `@fontsource` : aucune requête tierce.
