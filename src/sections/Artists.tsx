@@ -22,12 +22,14 @@ export function Artists() {
           {artists.map((a, i) => (
             <li key={a.slug} data-reveal style={{ ['--i' as string]: i }}>
               <Link href={`/artistes/${a.slug}`} className={styles.tile} aria-label={`${a.name} — voir la page du groupe`}>
-                {a.logo ? (
+                {a.tile ? (
+                  <img src={a.tile.src} alt={a.tile.alt} width={a.tile.width} height={a.tile.height} loading="lazy" decoding="async" className={styles.cover} />
+                ) : a.logo ? (
                   <img src={a.logo.src} alt={a.logo.alt} width={a.logo.width} height={a.logo.height} loading="lazy" decoding="async" className={styles.logo} />
                 ) : (
                   <span className={`display ${styles.word}`} style={{ ['--len' as string]: a.name.length }}>{a.name}</span>
                 )}
-                <span className={`mono ${styles.cta}`}>Voir le groupe <i aria-hidden="true">→</i></span>
+                <span className={`mono ${styles.cta}`}>{a.name} — voir le groupe <i aria-hidden="true">→</i></span>
               </Link>
             </li>
           ))}

@@ -1,6 +1,7 @@
 import { Footer } from '../components/Footer';
 import { Nav } from '../components/Nav';
 import { ButtonLink } from '../components/Button';
+import { SocialIcon } from '../components/SocialIcon';
 import { Contact } from '../sections/Contact';
 import { Link, internalClick } from "../router";
 import type { Artist } from '../data/artists';
@@ -32,6 +33,17 @@ export function ArtistPage({ artist }: { artist: Artist }) {
             ) : (
               <h1 id="artist-title" className={`display ${styles.name}`} style={{ ['--len' as string]: artist.name.length }}>{artist.name}</h1>
             )}
+            {links.length > 0 && (
+              <ul className={styles.icons} aria-label={`Liens officiels de ${artist.name}`}>
+                {links.map((l) => (
+                  <li key={l.href}>
+                    <a href={l.href} target="_blank" rel="noopener noreferrer" className={styles.icon} aria-label={`${l.label} (nouvel onglet)`} title={l.label}>
+                      <SocialIcon kind={l.kind} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
             {artist.description && <p className={styles.desc}>{artist.description}</p>}
             {empty && <p className={styles.soon}>La page de ce groupe se complète : photos, musique et liens officiels arrivent bientôt.</p>}
           </div>
@@ -61,21 +73,6 @@ export function ArtistPage({ artist }: { artist: Artist }) {
                     <audio controls preload="none" src={t.src}>
                       <a href={t.src}>Télécharger {t.title}</a>
                     </audio>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
-        )}
-
-        {links.length > 0 && (
-          <section className={styles.block} aria-labelledby="links-title">
-            <div className="wrap">
-              <h2 id="links-title" className={`mono ${styles.h}`}>Suivre le groupe</h2>
-              <ul className={styles.links}>
-                {links.map((l) => (
-                  <li key={l.href} data-reveal>
-                    <ButtonLink href={l.href} variant="line" target="_blank" rel="noopener noreferrer">{l.label}</ButtonLink>
                   </li>
                 ))}
               </ul>
