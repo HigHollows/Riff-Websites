@@ -1,6 +1,8 @@
 import { artists as realArtists, rosterSlots, type Artist } from '../data/artists';
 import { previewArtists } from '../data/artists.preview';
 import { StageVisual } from '../components/StageVisual';
+import { Photo } from '../components/Photo';
+import { photos } from '../data/photos';
 import { SectionHead } from '../components/SectionHead';
 import { ButtonLink } from '../components/Button';
 import { useContactIntent } from '../hooks/useContactIntent';
@@ -60,7 +62,7 @@ export function Artists() {
               </h2>
               <div className={styles.side} data-reveal style={{ ['--i' as string]: 2 }}>
                 <p>
-                  Les premiers groupes accompagnés seront présentés ici, un par un, avec l’accord de chacun. Pas de liste gonflée : seulement des artistes avec qui le travail a réellement commencé.
+                  Les premiers groupes accompagnés seront présentés ici, un par un, avec l’accord de chacun. Pas de liste gonflée : seulement des artistes avec qui le travail a réellement commencé. En attendant, voici l’endroit où tout se joue : la scène.
                 </p>
                 <ButtonLink href="#contact" variant="line" onClick={(e) => { e.preventDefault(); open('artiste'); }}>
                   Rejoindre la conversation
@@ -71,9 +73,9 @@ export function Artists() {
             <ul className={styles.slots}>
               {rosterSlots.map((s, i) => (
                 <li key={s.id} className={`${styles.slot} ${styles['slot' + s.id]}`} data-reveal style={{ ['--i' as string]: i }}>
-                  <StageVisual variant={s.variant} label="" />
+                  <Photo photo={photos[s.photo]} />
                   <span className={`display ${styles.slotNum}`} aria-hidden="true">{s.id}</span>
-                  <p className={`mono ${styles.slotLabel}`}>Emplacement {s.id}<br /><span>Artiste à confirmer</span></p>
+                  <p className={`mono ${styles.slotLabel}`}>Scène {s.id}<br /><span>Instantané live</span></p>
                 </li>
               ))}
             </ul>

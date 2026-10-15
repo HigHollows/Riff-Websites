@@ -1,4 +1,5 @@
-import { StageVisual } from '../components/StageVisual';
+import { Photo } from '../components/Photo';
+import { photos } from '../data/photos';
 import { Button } from '../components/Button';
 import { useContactIntent } from '../hooks/useContactIntent';
 import { site } from '../config/site';
@@ -15,11 +16,11 @@ export function Hero() {
         </p>
 
         <figure className={styles.visual}>
-          <StageVisual variant={4} sway label="Visuel de démonstration : faisceaux de lumière sur une scène et silhouettes du public" />
+          <Photo photo={photos.hero} priority />
           <div className={styles.rail} aria-hidden="true">
             {Array.from({ length: 9 }, (_, i) => <i key={i} style={{ ['--i' as string]: i }} />)}
           </div>
-          <figcaption className={`mono ${styles.caption}`}>Visuel de démonstration — photo live à intégrer</figcaption>
+          <figcaption className={`mono ${styles.caption}`}>Live — la scène vue de l’intérieur</figcaption>
         </figure>
 
         <h1 id="hero-title" className={`display ${styles.title}`}>

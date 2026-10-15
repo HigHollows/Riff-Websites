@@ -9,7 +9,7 @@
 
 .slots { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--s-2); align-items: start; }
 .slot { position: relative; overflow: hidden; background: var(--c-ink-2); border: 1px solid var(--c-line); border-radius: var(--r-3); }
-.slot > div { filter: saturate(0.85); }
+.slot::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(17,19,21,0.8), transparent 40%), linear-gradient(to bottom, rgba(17,19,21,0.55), transparent 35%); border-radius: inherit; z-index: 1; pointer-events: none; }
 .slot01 { grid-column: 1 / 6; aspect-ratio: 4 / 5; }
 .slot02 { grid-column: 6 / 10; aspect-ratio: 3 / 4; margin-top: clamp(3rem, 9vw, 9rem); }
 .slot03 { grid-column: 10 / -1; aspect-ratio: 2 / 3; margin-top: clamp(1rem, 3vw, 3rem); }

@@ -23,7 +23,7 @@ export const artists: Artist[] = [];
 
 /** Emplacements affichés tant que le roster est vide (aucun nom, aucun fait). */
 export const rosterSlots = [
-  { id: '01', variant: 1 },
-  { id: '02', variant: 2 },
-  { id: '03', variant: 3 },
+  { id: '01', photo: 'sunset' },
+  { id: '02', photo: 'crowdBw' },
+  { id: '03', photo: 'violet' },
 ] as const;
