@@ -1,4 +1,5 @@
 import { Photo } from '../components/Photo';
+import { DroneGramophone } from '../components/DroneGramophone';
 import { photos } from '../data/photos';
 import { Button } from '../components/Button';
 import { useContactIntent } from '../hooks/useContactIntent';
@@ -15,6 +16,10 @@ export function Hero() {
           Booking · Management · Accompagnement — {site.region}
         </p>
 
+        <div className={styles.gram}>
+          <DroneGramophone />
+        </div>
+
         <figure className={styles.visual}>
           <Photo photo={photos.hero} priority />
           <div className={styles.rail} aria-hidden="true">
@@ -24,10 +29,10 @@ export function Hero() {
         </figure>
 
         <h1 id="hero-title" className={`display ${styles.title}`}>
-          <span className={`${styles.line} ${styles.wide}`}><span>Faire émerger</span></span>
-          <span className={`${styles.line} ${styles.wide}`}><span>les groupes<b>.</b></span></span>
-          <span className={`${styles.line} ${styles.outline} ${styles.narrow}`}><span>Faire vibrer</span></span>
-          <span className={`${styles.line} ${styles.outline} ${styles.narrow}`}><span>les scènes<b>.</b></span></span>
+          <span className={`${styles.line}`}><span>Faire émerger</span></span>
+          <span className={`${styles.line}`}><span>les groupes<b>.</b></span></span>
+          <span className={`${styles.line} ${styles.outline}`}><span>Faire vibrer</span></span>
+          <span className={`${styles.line} ${styles.outline}`}><span>les scènes<b>.</b></span></span>
         </h1>
 
         <div className={styles.foot}>
