@@ -1,3 +1,5 @@
 .head { display: flex; align-items: center; gap: 1rem; padding-bottom: var(--s-3); border-bottom: 1px solid var(--c-line); margin-bottom: var(--s-5); }
 .index { color: var(--c-green); }
 .label { color: var(--c-mute); }
+.head[data-tone='ink'] { border-bottom-color: rgba(17, 19, 21, 0.35); }
+.head[data-tone='ink'] .index, .head[data-tone='ink'] .label { color: var(--c-green-ink); }

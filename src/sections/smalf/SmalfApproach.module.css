@@ -1,4 +1,4 @@
-.section { padding-block: var(--s-6); background: var(--c-ink-2); border-block: 1px solid var(--c-line); }
+.section { padding-block: var(--s-6); background: var(--c-ink-2) var(--tex-hatch); border-block: 1px solid var(--c-line); }
 .title { font-size: var(--fs-xl); max-width: 14ch; }
 
 /* Les trois piliers montent vers la droite : progression */

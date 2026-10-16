@@ -1,7 +1,7 @@
 .section { padding-block: var(--s-6); }
 .panel { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--s-2); row-gap: var(--s-4); background: var(--c-paper); color: var(--c-ink); border-radius: var(--r-3); padding: clamp(1.5rem, 4vw, 4rem); }
 .text { grid-column: 1 / 8; display: grid; gap: var(--s-3); align-content: start; }
-.lead { font-size: clamp(1.6rem, 3vw, 3rem); line-height: 1.12; max-width: 18ch; }
+.lead { font-size: clamp(2rem, 3.8vw, 3.8rem); max-width: 16ch; }
 .text p { font-size: var(--fs-md); line-height: 1.55; color: rgba(17, 19, 21, 0.82); max-width: 36rem; }
 .cta { display: flex; flex-wrap: wrap; gap: var(--s-2); }
 .lineDark { color: var(--c-ink); }

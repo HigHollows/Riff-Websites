@@ -11,3 +11,6 @@
 .legal a:hover { color: var(--c-paper); }
 .up { margin-left: auto; }
 @media (max-width: 860px) { .brand, .cols { grid-column: 1 / -1; } }
+
+.cols a, .legal a { background: linear-gradient(var(--c-green), var(--c-green)) 0 100% / 0 2px no-repeat; transition: color var(--t-fast), background-size var(--t-base) var(--ease); }
+.cols a:hover, .cols a:focus-visible, .legal a:hover, .legal a:focus-visible { background-size: 100% 2px; }

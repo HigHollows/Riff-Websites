@@ -7,9 +7,11 @@ export function Manifesto() {
   return (
     <section id="agence" className={styles.section} aria-labelledby="agence-title">
       <div className="wrap">
-        <SectionHead index="03" label="L’agence — Manifeste" />
+        <SectionHead index="03" label="L’agence — Manifeste" tone="ink" />
         <h2 id="agence-title" className="sr-only">Manifeste de RIFF</h2>
-        <p className={`display ${styles.lead}`} data-reveal>{manifestoLead}</p>
+        <p className={`statement ${styles.lead}`} data-reveal>
+          {manifestoLead.split(/(temps|contacts|dates)/).map((part, i) => (i % 2 ? <em key={i}>{part}</em> : part))}
+        </p>
 
         <div className={styles.cols}>
           <div className={styles.texts}>
@@ -29,7 +31,7 @@ export function Manifesto() {
             ))}
           </ol>
         </div>
-        <Pulse bars={64} accent={7} height={44} className={styles.pulse} />
+        <Pulse bars={64} accent={7} height={44} className={styles.pulse} light />
       </div>
     </section>
   );

@@ -11,7 +11,7 @@ export function Paths() {
         <article className={styles.artist} aria-labelledby="path-artist">
           <div className={styles.inner}>
             <p className="mono" data-reveal>Parcours artistes</p>
-            <h2 id="path-artist" className={`display ${styles.bigA}`} data-reveal>
+            <h2 id="path-artist" className={`statement ${styles.bigA}`} data-reveal>
               Votre projet<br />mérite de<br />passer un cap<span>.</span>
             </h2>
             <p className={styles.text} data-reveal style={{ ['--i' as string]: 2 }}>
@@ -32,7 +32,7 @@ export function Paths() {
         <article className={styles.pro} aria-labelledby="path-pro">
           <div className={styles.inner}>
             <p className="mono" data-reveal>Parcours professionnels</p>
-            <h2 id="path-pro" className={`display ${styles.bigB}`} data-reveal>
+            <h2 id="path-pro" className={`statement ${styles.bigB}`} data-reveal>
               Vous programmez<span>.</span><br />Parlons scène.
             </h2>
             <p className={styles.text} data-reveal style={{ ['--i' as string]: 2 }}>

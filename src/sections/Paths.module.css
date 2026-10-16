@@ -8,9 +8,9 @@
 .artist :global(.mono) { color: rgba(17, 19, 21, 0.62); }
 .pro :global(.mono) { color: var(--c-green); }
 
-.bigA { font-size: clamp(1.7rem, 3.4vw, 3.5rem); line-height: 1.1; }
+.bigA { font-size: clamp(2.4rem, 5vw, 5.2rem); }
 .bigA span { color: var(--c-ink); }
-.bigB { font-size: clamp(1.6rem, 2.7vw, 2.8rem); line-height: 1.12; }
+.bigB { font-size: clamp(2.2rem, 4vw, 4.2rem); }
 .bigB span { color: var(--c-green); }
 .text { max-width: 30rem; font-size: var(--fs-md); line-height: 1.5; }
 .artist .text { color: rgba(17, 19, 21, 0.82); }
@@ -27,6 +27,6 @@
   .axis { height: 3rem; }
   .axisWord { writing-mode: horizontal-tb; transform: none; font-size: 1.6rem; }
   .pro { display: block; }
-  .bigA { font-size: clamp(1.6rem, 7.4vw, 3.4rem); }
-  .bigB { font-size: clamp(1.5rem, 6.8vw, 3.2rem); }
+  .bigA { font-size: clamp(2.4rem, 10vw, 4.4rem); }
+  .bigB { font-size: clamp(2.2rem, 9.4vw, 4rem); }
 }

@@ -14,7 +14,7 @@ export function SmalfRiff() {
         <SectionHead index="03" label="Le lien avec RIFF" />
         <div className={styles.panel} data-reveal>
           <div className={styles.text}>
-            <h2 id="riff-title" className={`display ${styles.lead}`}>{smalfRiff.lead}</h2>
+            <h2 id="riff-title" className={`statement ${styles.lead}`}>{smalfRiff.lead}</h2>
             <p>{smalfRiff.text}</p>
             <div className={styles.cta}>
               <ButtonLink href="/#services" variant="ink" onClick={internalClick}>Les services de RIFF</ButtonLink>

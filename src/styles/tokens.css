@@ -36,9 +36,9 @@
   --nav-h: 64px;
 
   /* Rayons : angles vifs par défaut */
-  --r-1: 8px;     /* petits éléments : champs, cases, boutons */
-  --r-2: 18px;    /* conteneurs moyens */
-  --r-3: 32px;    /* grandes surfaces : visuels, panneaux */
+  --r-1: 6px;     /* petits éléments : champs, cases, boutons */
+  --r-2: 12px;    /* conteneurs moyens */
+  --r-3: 20px;    /* grandes surfaces : visuels, panneaux */
 
   /* Mouvement : une seule grammaire */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);   /* sortie franche, arrêt net */
@@ -47,6 +47,11 @@
   --t-base: 520ms;     /* révélations */
   --t-slow: 1000ms;    /* entrées majeures */
   --stagger: 70ms;
+
+  /* Textures (CSS pur, aucune image) */
+  --tex-halftone: radial-gradient(circle, rgba(236, 235, 228, 0.09) 1.1px, transparent 1.6px) 0 0 / 14px 14px;
+  --tex-hatch: repeating-linear-gradient(135deg, rgba(236, 235, 228, 0.045) 0 1px, transparent 1px 9px);
+  --tex-hatch-dark: repeating-linear-gradient(135deg, rgba(17, 19, 21, 0.1) 0 1px, transparent 1px 9px);
 
   /* Couches */
   --z-nav: 50;

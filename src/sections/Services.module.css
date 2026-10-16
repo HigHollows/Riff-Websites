@@ -1,4 +1,4 @@
-.section { padding-block: var(--s-6); background: var(--c-ink-2); border-block: 1px solid var(--c-line); }
+.section { padding-block: var(--s-6); background: var(--c-ink-2) var(--tex-halftone); border-block: 1px solid var(--c-line); }
 .layout { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--s-2); row-gap: var(--s-5); }
 .intro { grid-column: 1 / 5; align-self: start; position: sticky; top: calc(var(--nav-h) + var(--s-4)); display: grid; gap: var(--s-3); color: var(--c-paper-2); }
 .title { font-size: var(--fs-xl); color: var(--c-paper); }
